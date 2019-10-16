@@ -67,6 +67,18 @@ public class MyController {
         newLabeltask.setText("*");
         newLabeltask.setBackground(new Background(new BackgroundFill(Color.VIOLET,
         CornerRadii.EMPTY, Insets.EMPTY))); paneArena.getChildren().addAll(newLabeltask);
+        
+        Label newLabeltask2 = new Label();
+        newLabeltask2.setLayoutX(GRID_WIDTH*2.25);
+        newLabeltask2.setLayoutY(GRID_WIDTH*3.25);
+        newLabeltask2.setMinWidth(GRID_WIDTH/ 2);
+        newLabeltask2.setMaxWidth(GRID_WIDTH / 2);
+        newLabeltask2.setMinHeight(GRID_WIDTH / 2);
+        newLabeltask2.setMaxHeight(GRID_WIDTH / 2);
+        newLabeltask2.setStyle("-fx-border-color: black;");
+        newLabeltask2.setText("*");
+        newLabeltask2.setBackground(new Background(new BackgroundFill(Color.PINK, CornerRadii.EMPTY, Insets.EMPTY)));
+        paneArena.getChildren().addAll(newLabeltask2);
     }
 
     /**
