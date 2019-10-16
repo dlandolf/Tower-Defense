@@ -85,6 +85,18 @@ public class MyController {
 		newLabeltask2.setText("*");
 		newLabeltask2.setBackground(new Background(new BackgroundFill(Color.PINK, CornerRadii.EMPTY, Insets.EMPTY)));
 		paneArena.getChildren().addAll(newLabeltask2);
+		
+		Label TimsLabel = new Label();
+		TimsLabel.setLayoutX(GRID_WIDTH*4.25);
+		TimsLabel.setLayoutY(GRID_WIDTH*3.25);
+		TimsLabel.setMinWidth(GRID_WIDTH/ 2);
+		TimsLabel.setMaxWidth(GRID_WIDTH / 2);
+		TimsLabel.setMinHeight(GRID_WIDTH / 2);
+		TimsLabel.setMaxHeight(GRID_WIDTH / 2);
+		TimsLabel.setStyle("-fx-border-color: black;");
+		TimsLabel.setText("Tim");
+		TimsLabel.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+		paneArena.getChildren().addAll(TimsLabel);
 
 	}
 
