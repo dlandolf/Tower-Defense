@@ -2,23 +2,19 @@ package towers;
 import monsters.*;
 import general.*;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 
 public class LaserTower extends BasicTower{
 
 	int attackCost;
 	int laserWidth;
 	
-	public LaserTower(int x,int y, Game game) throws IOException{
+	public LaserTower(int x,int y, Game game){
 		super(x,y,game);
 		this.attackCost = 1;
 		this.laserWidth = 3;
-		this.img = ImageIO.read(new File("laserTower.png"));
+		this.img = "/laserTower.png";
 	}
 	
 	boolean checkIfOnBeam(Monster selectedMonster, Monster monster) {

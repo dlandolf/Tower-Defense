@@ -2,13 +2,9 @@ package towers;
 import monsters.*;
 import general.*;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.lang.Math; 
-import javax.imageio.ImageIO;
 
 
 public class BasicTower {
@@ -18,20 +14,20 @@ public class BasicTower {
 	int x;
 	int y;
 	int cost;
-	BufferedImage img;
+	String img;
 	
-	public BasicTower(int x, int y, Game game) throws IOException {
+	public BasicTower(int x, int y, Game game){
 		this.game = game;
 		this.range = 65;
 		this.attackPower = 1;
 		this.x = x;
 		this.y = y;
 		this.cost = 10;
-		this.img = ImageIO.read(new File("basicTower.png"));
+		this.img = "/basicTower.png";
 	}
 	
 	public int distance(int x1, int y1,int x2, int y2) {
-		int distance = (int) Math.abs(Math.sqrt((x1 - x2)^2 + (y1 - y2)^2));
+		int distance = (int) Math.abs(Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2,2)));
 		return distance;
 	}
 	

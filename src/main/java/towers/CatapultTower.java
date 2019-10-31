@@ -1,12 +1,8 @@
 package towers;
 import monsters.*;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 
 import general.*;
 
@@ -18,14 +14,14 @@ public class CatapultTower extends BasicTower{
 	int maxRange;
 	int damageRadius;
 	
-	public CatapultTower(int x,int y, Game game) throws IOException{
+	public CatapultTower(int x,int y, Game game){
 		super(x,y,game);
 		this.coolDownTime = 5;
 		this.inCoolDownFrames = 0;
 		this.minRange = 50;
 		this.maxRange = 150;
 		this.damageRadius = 25;
-		this.img = ImageIO.read(new File("catapult.png"));
+		this.img = "/catapult.png";
 	}
 	
 	boolean checkIfInZone(Monster selectedMonster, Monster monster) {
