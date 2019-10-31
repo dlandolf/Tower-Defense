@@ -2,12 +2,8 @@ package towers;
 import general.*;
 import monsters.*;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 
 
 public class IceTower extends BasicTower{
@@ -15,12 +11,12 @@ public class IceTower extends BasicTower{
 	int slowingFactor;
 	int slowingFrames;
 	
-	public IceTower(int x,int y, Game game) throws IOException{
+	public IceTower(int x,int y, Game game){
 		super(x,y,game);
 		this.slowingFactor = 2;
 		this.slowingFrames = 5;
 		this.attackPower = 0;
-		this.img = ImageIO.read(new File("iceTower.png"));
+		this.img = "/iceTower.png";
 	}
 	
 	@Override
