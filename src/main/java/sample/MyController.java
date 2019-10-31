@@ -11,13 +11,8 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.geometry.Insets;
 import javafx.scene.paint.Color;
-import javafx.application.Application;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 
 import general.*;
 import towers.*;
@@ -37,9 +32,16 @@ public class MyController {
 	private Label labelLaserTower;
 	@FXML
 	private Label labelMoney;
-	
-	private static final int ARENA_WIDTH = 480;
-	private static final int ARENA_HEIGHT = 480;
+	@FXML
+	private Label basicTowerImg;
+	@FXML
+	private Label iceTowerImg;
+	@FXML
+	private Label catapultImg;
+	@FXML
+	private Label laserTowerImg;
+	//private static final int ARENA_WIDTH = 480;
+	//private static final int ARENA_HEIGHT = 480;
 	private static final int GRID_WIDTH = 40;
 	private static final int GRID_HEIGHT = 40;
 	private static final int MAX_H_NUM_GRID = 12;
@@ -47,10 +49,17 @@ public class MyController {
 	private static final int START_RESOURCES = 1500;
 	private int resources;
 	private Label grids[][] = new Label[MAX_V_NUM_GRID][MAX_H_NUM_GRID]; // the grids on arena
-	private int x = -1, y = 0; // where is my monster
-	private static final Game game;
+	private Game game;
 	
 	
+	public static int getGridWidth() {
+		return GRID_WIDTH;
+	}
+
+	public static int getGridHeight() {
+		return GRID_HEIGHT;
+	}
+
 	@FXML
 	private void nextFrame() {
 		resources-=100;
@@ -64,8 +73,16 @@ public class MyController {
 	 */
 	@FXML
 	public void createArena() {
+		Image image = new Image(getClass().getResourceAsStream("/basicTower.png"), 40, 40, false, false);
+		basicTowerImg.setGraphic(new ImageView(image));
+		image = new Image(getClass().getResourceAsStream("/iceTower.png"), 40, 40, false, false);
+		iceTowerImg.setGraphic(new ImageView(image));
+		image = new Image(getClass().getResourceAsStream("/laserTower.png"), 40, 40, false, false);
+		laserTowerImg.setGraphic(new ImageView(image));
+		image = new Image(getClass().getResourceAsStream("/catapult.png"), 40, 40, false, false);
+		catapultImg.setGraphic(new ImageView(image));
 		this.resources = START_RESOURCES;
-		this.game = new Game(resources);
+		game = new Game(resources);
 		String nbAsStr = String.valueOf(START_RESOURCES);
 		labelMoney.setText(nbAsStr);
 		if (grids[0][0] != null)
@@ -79,22 +96,18 @@ public class MyController {
 				else
 					newLabel.setBackground(
 							new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
-				newLabel.setLayoutX(j * GRID_WIDTH);
-				newLabel.setLayoutY(i * GRID_HEIGHT);
-				newLabel.setMinWidth(GRID_WIDTH);
-				newLabel.setMaxWidth(GRID_WIDTH);
-				newLabel.setMinHeight(GRID_HEIGHT);
-				newLabel.setMaxHeight(GRID_HEIGHT);
+				newLabel.setLayoutX(j * getGridWidth()); newLabel.setLayoutY(i * getGridHeight());
+				newLabel.setMinWidth(getGridWidth()); newLabel.setMaxWidth(getGridWidth());
+				newLabel.setMinHeight(getGridHeight()); newLabel.setMaxHeight(getGridHeight());
 				newLabel.setStyle("-fx-border-color: black;");
 				grids[i][j] = newLabel;
 				paneArena.getChildren().addAll(newLabel);
 			}
-
 		setDragAndDrop();
 	}
 
 	/**
-	 * A function that demo how drag and drop works
+	 * set drag and drop for towers
 	 */
 	private void setDragAndDrop() {
 		Label source1 = labelBasicTower;
@@ -110,17 +123,10 @@ public class MyController {
 				Label target = grids[i][j];
 				Color color = (Color)target.getBackground().getFills().get(0).getFill();
 				if(color == Color.GREEN) {
-					target.setText("Drop\nHere");
 					target.setOnDragDropped(new DragDroppedEventHandler());
-			
-					// well, you can also write anonymous class or even lambda
-					// Anonymous class
 					target.setOnDragOver(new EventHandler<DragEvent>() {
 						public void handle(DragEvent event) {
-							/* data is dragged over the target
-							 * accept it only if it is not dragged from the same node and if it has a string data */
 							if (event.getGestureSource() != target && event.getDragboard().hasString()) {
-								/* allow for both copying and moving, whatever user chooses */
 								event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
 							}
 							event.consume();
@@ -129,19 +135,14 @@ public class MyController {
 			
 					target.setOnDragEntered(new EventHandler<DragEvent>() {
 						public void handle(DragEvent event) {
-							/* the drag-and-drop gesture entered the target 
-							 * show to the user that it is an actual gesture target */
 							if (event.getGestureSource() != target && event.getDragboard().hasString()) {
 								target.setStyle("-fx-border-color: blue;");
 							}
 							event.consume();
 						}
 					});
-					// lambda
 					target.setOnDragExited((event) -> {
-						/* mouse moved away, remove the graphical cues */
 						target.setStyle("-fx-border-color: black;");
-						System.out.println("Exit");
 						event.consume();
 					});
 				}
@@ -169,42 +170,43 @@ class DragEventHandler implements EventHandler<MouseEvent> {
 class DragDroppedEventHandler implements EventHandler<DragEvent> {
 	enum ValidatorType {
 	    BASIC {
-	        public BasicTower create(int x, int y) {
-	            return new BasicTower(x,y, game);
-	        }
+	        public BasicTower create(int x, int y) {return new BasicTower(x,y);}
 	    },
 	    ICE {
-	        public BasicTower create(int x, int y) {
-	            return new IceTower(x, y , game);
-	        }
+	        public BasicTower create(int x, int y) {return new IceTower(x, y);}
 	    },
 	    CATAPULT {
-	        public BasicTower create(int x, int y) {
-	            return new CatapultTower(x, y, game);
-	        }
+	        public BasicTower create(int x, int y) {return new CatapultTower(x, y);}
 	    },
 	    LASER {
-	        public BasicTower create(int x, int y) {
-	            return new LaserTower(x, y, game);
-	        }
+	        public BasicTower create(int x, int y) {return new LaserTower(x, y);}
 	    };
-	    public BasicTower create(int x, int y) {
-	        return null;
-	    }
+	    public BasicTower create(int x, int y) {return null;}
 	}
 	public BasicTower newInstance(ValidatorType validatorType, int x, int y) {
 	    return validatorType.create(x, y);
+	}
+	public String changeToEnum(String str) {
+		String newstr = "";
+		int i=0;
+		while (i<str.length() && str.charAt(i) !=' ') {
+			newstr+=str.charAt(i);
+			i++;
+		}
+		return newstr.toUpperCase();
 	}
 	
 	@Override
 	public void handle(DragEvent event) {
 		Dragboard db = event.getDragboard();
 		boolean success = false;
-		System.out.println(db.getString());
 		if (db.hasString()) {
-			
-			//BasicTower newTower = newInstance(BASIC, 2, 2);
-			Image image = new Image(getClass().getResourceAsStream("/basicTower.png"), 40, 40, false, false);
+			BasicTower newTower = newInstance(ValidatorType.valueOf(changeToEnum(db.getString())), 
+					((int)((Label) event.getGestureTarget()).getLayoutX())/MyController.getGridWidth(), 
+					((int)((Label) event.getGestureTarget()).getLayoutY())/MyController.getGridHeight());
+			//TODO : add this tower to the towerlist of game
+			//add events to this tower
+			Image image = new Image(getClass().getResourceAsStream(newTower.getImg()), 40, 40, false, false);
 			((Label) event.getGestureTarget()).setGraphic(new ImageView(image));
 			success = true;
 		}

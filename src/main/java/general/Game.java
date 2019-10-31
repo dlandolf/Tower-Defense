@@ -1,49 +1,80 @@
 package general;
 
 import java.util.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.input.*;
-import javafx.event.*;
-import javafx.fxml.FXML;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.geometry.Insets;
-import javafx.scene.paint.Color;
 import towers.*;
 import monsters.*;
 
 public class Game {
-	public int resources;
-	public int endzonex;
-	public int endzoney;
+	private int resources;
+	private int endzonex;
+	private int endzoney;
+	private int frameId;
 	
-	public List<BasicTower> towerList;
-	public List<Monster> monsterList;
-	public List<Object> attackList;
-	public Monster monstertoadd;
+	private List<BasicTower> towerList;
+	private List<Monster> monsterList;
+	private List<Object> attackList;
+	private Monster monstertoadd;
+	
 	
 	public Game(int resources) {
-		this.resources= resources;
+		this.frameId=0;
+		this.setResources(resources);
 		towerList = new ArrayList<BasicTower>();
-		monsterList = new ArrayList<Monster>();
-		attackList=new ArrayList<Object>();
+		setMonsterList(new ArrayList<Monster>());
+		setAttackList(new ArrayList<Object>());
 		monstertoadd = null;
 	}
 	
+	
+	public int getEndzonex() {
+		return endzonex;
+	}
+
+	public int getEndzoney() {
+		return endzoney;
+	}
+
+	public List<Monster> getMonsterList() {
+		return monsterList;
+	}
+
+	public void setMonsterList(List<Monster> monsterList) {
+		this.monsterList = monsterList;
+	}
+
+	public List<Object> getAttackList() {
+		return attackList;
+	}
+
+	public void setAttackList(List<Object> attackList) {
+		this.attackList = attackList;
+	}
+
+	public int getResources() {
+		return resources;
+	}
+
+	public void setResources(int resources) {
+		this.resources = resources;
+	}
+	
+	public int getFrameId() {
+		return frameId;
+	}
+
+	
 	public boolean nextframe () {
-		for (Monster monster : monsterList) {
+		frameId++;
+		//for (Monster monster : getMonsterList()) {
 			//if (monster.move()) return true;
-		}
+		//}
 		Monster newMonster = addNewMonster();
 		if (newMonster != null) {
-			monsterList.add(newMonster);
+			getMonsterList().add(newMonster);
 		}
 
 		for (BasicTower tower : towerList) {
-			tower.shoot(); //switch to private and add monsterlist as argument
+			tower.shoot(this); //switch to private and add monsterlist as argument
 		}
 		return false;
 	}

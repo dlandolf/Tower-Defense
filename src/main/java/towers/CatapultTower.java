@@ -8,20 +8,20 @@ import general.*;
 
 public class CatapultTower extends BasicTower{
 
-	int coolDownTime;
-	int inCoolDownFrames;
-	int minRange;
-	int maxRange;
-	int damageRadius;
+	private int coolDownTime;
+	private int inCoolDownFrames;
+	private int minRange;
+	private int maxRange;
+	private int damageRadius;
 	
-	public CatapultTower(int x,int y, Game game){
-		super(x,y,game);
+	public CatapultTower(int x,int y){
+		super(x,y);
 		this.coolDownTime = 5;
 		this.inCoolDownFrames = 0;
 		this.minRange = 50;
 		this.maxRange = 150;
 		this.damageRadius = 25;
-		this.img = "/catapult.png";
+		this.setImg("/catapult.png");
 	}
 	
 	boolean checkIfInZone(Monster selectedMonster, Monster monster) {
@@ -36,19 +36,19 @@ public class CatapultTower extends BasicTower{
 	}
 	
 	@Override
-	public Monster selectMonster(List<Monster> monsterList) {
+	public Monster selectMonster(List<Monster> monsterList, Game game) {
 		//Iterate through all monsters and select the one to shoot
 		Monster selectedMonster = null;
 		for(Monster monster: monsterList) {
 			
 			//Check if the monster in range
-			int distance = distance(x, y, monster.x, monster.y);
+			int distance = distance(getX(), getY(), monster.x, monster.y);
 			if(distance <= maxRange && distance >= minRange) {
 				
 				//Chose which monster to shoot if more than one is in range
 				if(selectedMonster != null) {
 					//Decide which monster is closer to endzone, chose endzone as in demo (440,0)
-					if(distance(monster.x,monster.y,game.endzonex,game.endzoney) < distance(selectedMonster.x,selectedMonster.y,game.endzonex,game.endzoney)) {
+					if(distance(monster.x,monster.y,game.getEndzonex(),game.getEndzoney()) < distance(selectedMonster.x,selectedMonster.y,game.getEndzonex(),game.getEndzoney())) {
 						selectedMonster = monster;
 					}
 				}
@@ -63,19 +63,19 @@ public class CatapultTower extends BasicTower{
 	}
 	
 	@Override
-	public void shoot() {
+	public void shoot(Game game) {
 		if(inCoolDownFrames == 0) {
-			Monster selectedMonster = selectMonster(game.monsterList);
+			Monster selectedMonster = selectMonster(game.getMonsterList(), game);
 			//shoot Monster
 					if(selectedMonster != null) {
 						
-						for(Monster monster: game.monsterList) {
+						for(Monster monster: game.getMonsterList()) {
 							if(checkIfInZone(selectedMonster, monster)) {
-								game.monsterList.get(game.monsterList.indexOf(monster)).hp = selectedMonster.hp - attackPower;
+								game.getMonsterList().get(game.getMonsterList().indexOf(monster)).hp = selectedMonster.hp - getAttackPower();
 								List<Object> attackPair = new ArrayList<Object>();
 								attackPair.add(this);
 								attackPair.add(monster);
-								game.attackList.add(attackPair);
+								game.getAttackList().add(attackPair);
 							}
 						}
 				
