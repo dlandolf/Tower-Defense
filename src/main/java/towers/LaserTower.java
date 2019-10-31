@@ -2,32 +2,28 @@ package towers;
 import monsters.*;
 import general.*;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.imageio.ImageIO;
-
 public class LaserTower extends BasicTower{
 
-	int attackCost;
-	int laserWidth;
+	private int attackCost;
+	private int laserWidth;
 	
-	public LaserTower(int x,int y, Game game) throws IOException{
-		super(x,y,game);
+	public LaserTower(int x,int y){
+		super(x,y);
 		this.attackCost = 1;
 		this.laserWidth = 3;
-		this.img = ImageIO.read(new File("laserTower.png"));
+		this.setImg("/laserTower.png");
 	}
 	
 	boolean checkIfOnBeam(Monster selectedMonster, Monster monster) {
 	
-		int vx = selectedMonster.x-x;
-		int vy = selectedMonster.y-y;
-		double a = (monster.x-x)/vx;
+		int vx = selectedMonster.x-getX();
+		int vy = selectedMonster.y-getY();
+		double a = (monster.x-getX())/vx;
 		
-		if(a>0 && y + a * vy - laserWidth < monster.y && monster.y < y + a * vy + laserWidth) {
+		if(a>0 && getY() + a * vy - laserWidth < monster.y && monster.y < getY() + a * vy + laserWidth) {
 			return true;
 		}
 		else {
@@ -37,22 +33,22 @@ public class LaserTower extends BasicTower{
 	}
 	
 	@Override
-	public void shoot() {
-		Monster selectedMonster = selectMonster(game.monsterList);
+	public void shoot(Game game) {
+		Monster selectedMonster = selectMonster(game.getMonsterList(), game);
 		//shoot Monster
 				if(selectedMonster != null) {
-					if(game.resources >= attackCost) {
-						for(Monster monster: game.monsterList) {
+					if(game.getResources() >= attackCost) {
+						for(Monster monster: game.getMonsterList()) {
 							if(checkIfOnBeam(selectedMonster, monster)) {
-								game.monsterList.get(game.monsterList.indexOf(monster)).hp = selectedMonster.hp - attackPower;
+								game.getMonsterList().get(game.getMonsterList().indexOf(monster)).hp = selectedMonster.hp - getAttackPower();
 								List<Object> attackPair = new ArrayList<Object>();
 								attackPair.add(this);
 								attackPair.add(monster);
-								game.attackList.add(attackPair);
+								game.getAttackList().add(attackPair);
 							}
 						}
 					}
-					game.resources = game.resources - attackCost;
+					game.setResources(game.getResources() - attackCost);
 			
 				}
 	}
