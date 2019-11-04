@@ -19,11 +19,11 @@ public class LaserTower extends BasicTower{
 	
 	boolean checkIfOnBeam(Monster selectedMonster, Monster monster) {
 	
-		int vx = selectedMonster.x-getX();
-		int vy = selectedMonster.y-getY();
-		double a = (monster.x-getX())/vx;
+		int vx = selectedMonster.getX()-getX();
+		int vy = selectedMonster.getY()-getY();
+		double a = (monster.getX()-getX())/vx;
 		
-		if(a>0 && getY() + a * vy - laserWidth < monster.y && monster.y < getY() + a * vy + laserWidth) {
+		if(a>0 && getY() + a * vy - laserWidth < monster.getY() && monster.getY() < getY() + a * vy + laserWidth) {
 			return true;
 		}
 		else {
@@ -40,7 +40,7 @@ public class LaserTower extends BasicTower{
 					if(game.getResources() >= attackCost) {
 						for(Monster monster: game.getMonsterList()) {
 							if(checkIfOnBeam(selectedMonster, monster)) {
-								game.getMonsterList().get(game.getMonsterList().indexOf(monster)).hp = selectedMonster.hp - getAttackPower();
+								game.getMonsterList().get(game.getMonsterList().indexOf(monster)).setHp(selectedMonster.getHp() - getAttackPower());
 								List<Object> attackPair = new ArrayList<Object>();
 								attackPair.add(this);
 								attackPair.add(monster);

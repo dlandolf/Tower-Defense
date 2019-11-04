@@ -24,9 +24,9 @@ public class IceTower extends BasicTower{
 		Monster selectedMonster = selectMonster(game.getMonsterList(), game);
 		//shoot Monster
 				if(selectedMonster != null) {
-					game.getMonsterList().get(game.getMonsterList().indexOf(selectedMonster)).hp = selectedMonster.hp - getAttackPower();
-					game.getMonsterList().get(game.getMonsterList().indexOf(selectedMonster)).speed = selectedMonster.speed/slowingFactor;
-					game.getMonsterList().get(game.getMonsterList().indexOf(selectedMonster)).slowForFrames = slowingFrames;
+					game.getMonsterList().get(game.getMonsterList().indexOf(selectedMonster)).setHp(selectedMonster.getHp() - getAttackPower());
+					game.getMonsterList().get(game.getMonsterList().indexOf(selectedMonster)).setSpeed(selectedMonster.getSpeed()/slowingFactor);
+					game.getMonsterList().get(game.getMonsterList().indexOf(selectedMonster)).setSlowForFrames(slowingFrames);
 					
 					List<Object> attackPair = new ArrayList<Object>();
 					attackPair.add(this);

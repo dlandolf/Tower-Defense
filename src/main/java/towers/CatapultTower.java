@@ -26,7 +26,7 @@ public class CatapultTower extends BasicTower{
 	
 	boolean checkIfInZone(Monster selectedMonster, Monster monster) {
 		
-		if(distance(selectedMonster.x,selectedMonster.y, monster.x, monster.y) <= damageRadius) {
+		if(distance(selectedMonster.getX(),selectedMonster.getY(), monster.getX(), monster.getY()) <= damageRadius) {
 			return true;
 		}
 		else {
@@ -42,13 +42,13 @@ public class CatapultTower extends BasicTower{
 		for(Monster monster: monsterList) {
 			
 			//Check if the monster in range
-			int distance = distance(getX(), getY(), monster.x, monster.y);
+			int distance = distance(getX(), getY(), monster.getX(), monster.getY());
 			if(distance <= maxRange && distance >= minRange) {
 				
 				//Chose which monster to shoot if more than one is in range
 				if(selectedMonster != null) {
 					//Decide which monster is closer to endzone, chose endzone as in demo (440,0)
-					if(distance(monster.x,monster.y,game.getEndzonex(),game.getEndzoney()) < distance(selectedMonster.x,selectedMonster.y,game.getEndzonex(),game.getEndzoney())) {
+					if(distance(monster.getX(),monster.getY(),game.getEndzonex(),game.getEndzoney()) < distance(selectedMonster.getX(),selectedMonster.getY(),game.getEndzonex(),game.getEndzoney())) {
 						selectedMonster = monster;
 					}
 				}
@@ -71,7 +71,7 @@ public class CatapultTower extends BasicTower{
 						
 						for(Monster monster: game.getMonsterList()) {
 							if(checkIfInZone(selectedMonster, monster)) {
-								game.getMonsterList().get(game.getMonsterList().indexOf(monster)).hp = selectedMonster.hp - getAttackPower();
+								game.getMonsterList().get(game.getMonsterList().indexOf(monster)).setHp(selectedMonster.getHp() - getAttackPower());
 								List<Object> attackPair = new ArrayList<Object>();
 								attackPair.add(this);
 								attackPair.add(monster);
