@@ -11,6 +11,9 @@ public class PenguinMonster extends Monster {
 		this.setImg("/penguin.png");
 	}
 	
-	//add function to replenish HP!!
+	@Override
+	public void replenishHP() {
+		this.setHp(this.getHp() + 2);
+	}
 
 }
