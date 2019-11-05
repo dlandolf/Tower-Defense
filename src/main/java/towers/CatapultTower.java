@@ -10,18 +10,20 @@ public class CatapultTower extends BasicTower{
 
 	private int coolDownTime;
 	private int inCoolDownFrames;
-	private int minRange;
-	private int maxRange;
 	private int damageRadius;
 	
 	public CatapultTower(int x,int y){
 		super(x,y);
 		this.coolDownTime = 5;
 		this.inCoolDownFrames = 0;
-		this.minRange = 50;
-		this.maxRange = 150;
 		this.damageRadius = 25;
 		this.setImg("/catapult.png");
+		this.setMaxRange(150);
+		this.setMinRange(50);
+	}
+	@Override
+	public String getType() {
+		return "Catapult";
 	}
 	
 	boolean checkIfInZone(Monster selectedMonster, Monster monster) {
@@ -35,7 +37,7 @@ public class CatapultTower extends BasicTower{
 		
 	}
 	
-	@Override
+	/*@Override
 	public Monster selectMonster(List<Monster> monsterList, Game game) {
 		//Iterate through all monsters and select the one to shoot
 		Monster selectedMonster = null;
@@ -43,7 +45,7 @@ public class CatapultTower extends BasicTower{
 			
 			//Check if the monster in range
 			int distance = distance(getX(), getY(), monster.x, monster.y);
-			if(distance <= maxRange && distance >= minRange) {
+			if(distance <= this.getMaxRange() && distance >= this.getMinRange()) {
 				
 				//Chose which monster to shoot if more than one is in range
 				if(selectedMonster != null) {
@@ -60,7 +62,7 @@ public class CatapultTower extends BasicTower{
 
 		
 		return selectedMonster;
-	}
+	}*/
 	
 	@Override
 	public void shoot(Game game) {
@@ -87,5 +89,6 @@ public class CatapultTower extends BasicTower{
 	@Override
 	public void upgradeTower() {
 		coolDownTime = coolDownTime - 1;
+		this.setLevel(this.getLevel()+1);
 	}
 }

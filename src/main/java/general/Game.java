@@ -85,6 +85,37 @@ public class Game {
 	
 	public boolean buildTower(BasicTower tower) {
 		towerList.add(tower);
+		return true;
+	}
+	public void printTowers() {
+		for (BasicTower tower : towerList) {
+			System.out.println("Tower" + tower.getType() + "   x: " + tower.getX() + "  y: " + tower.getY());
+		}
+	}
+	
+	public BasicTower getTower(int i, int j) {
+		for (BasicTower tower : towerList) {
+			if (tower.getX()==i && tower.getY()==j) {
+				return tower;
+			}
+		}
+		return null;
+	}
+	public boolean isTower(BasicTower tower) {
+		for (BasicTower towerenum : towerList) {
+			if (towerenum == tower) {
+				return true;
+			}
+		}
+		return false;
+	}
+	public boolean destroyTower(int i, int j) {
+		for (BasicTower tower : towerList) {
+			if (tower.getX()==i && tower.getY()==j) {
+				towerList.remove(tower);
+				return true;
+			}
+		}
 		return false;
 	}
 }
