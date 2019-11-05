@@ -8,20 +8,28 @@ import java.lang.Math;
 
 
 public class BasicTower {
-	private int range;
+	private int maxRange;
+	private int minRange;
 	private int attackPower;
 	private int x;
 	private int y;
 	private int cost;
 	private String img;
+	private int level;
 	
 	public BasicTower(int x, int y){
-		this.range = 65;
+		this.maxRange = 65;
+		this.minRange = 0;
 		this.setAttackPower(1);
 		this.setX(x);
 		this.setY(y);
 		this.cost = 10;
+		this.level = 1;
 		this.img = "/basicTower.png";
+	}
+	
+	public String getType() {
+		return "Basic";
 	}
 	
 	public String getImg() {
@@ -52,13 +60,34 @@ public class BasicTower {
 		return attackPower;
 	}
 	
-	public int getCost() {
-		return cost;
-	}
-
 	public void setAttackPower(int attackPower) {
 		this.attackPower = attackPower;
 	}
+	
+	public int getCost() {
+		return cost;
+	}
+	
+	public int getMaxRange() {
+		return maxRange;
+	}
+	public void setMaxRange(int max) {
+		this.maxRange = max;
+	}
+	public int getMinRange() {
+		return minRange;
+	}
+	public void setMinRange(int min) {
+		this.minRange = min;
+	}
+	
+	public int getLevel() {
+		return level;
+	}
+	public void setLevel(int level) {
+		this.level= level;
+	}
+
 
 	public int distance(int x1, int y1,int x2, int y2) {
 		int distance = (int) Math.abs(Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2,2)));
@@ -72,8 +101,7 @@ public class BasicTower {
 			
 			//Check if the monster in range
 			int distance = distance(getX(), getY(), monster.getX(), monster.getY());
-			if(distance <= range) {
-				
+			if(distance <= this.getMaxRange() && distance >= this.getMinRange()) {				
 				//Chose which monster to shoot if more than one is in range
 				if(selectedMonster != null) {
 					//Decide which monster is closer to endzone, chose endzone as in demo (440,0)
@@ -107,6 +135,7 @@ public class BasicTower {
 	
 	public void upgradeTower() {
 		setAttackPower(getAttackPower() + 1);
+		this.level++;
 	}
 	
 	

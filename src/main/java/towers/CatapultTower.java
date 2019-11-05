@@ -10,18 +10,20 @@ public class CatapultTower extends BasicTower{
 
 	private int coolDownTime;
 	private int inCoolDownFrames;
-	private int minRange;
-	private int maxRange;
 	private int damageRadius;
 	
 	public CatapultTower(int x,int y){
 		super(x,y);
 		this.coolDownTime = 5;
 		this.inCoolDownFrames = 0;
-		this.minRange = 50;
-		this.maxRange = 150;
 		this.damageRadius = 25;
 		this.setImg("/catapult.png");
+		this.setMaxRange(150);
+		this.setMinRange(50);
+	}
+	@Override
+	public String getType() {
+		return "Catapult";
 	}
 	
 	boolean checkIfInZone(Monster selectedMonster, Monster monster) {
@@ -35,20 +37,20 @@ public class CatapultTower extends BasicTower{
 		
 	}
 	
-	@Override
+	/*@Override
 	public Monster selectMonster(List<Monster> monsterList, Game game) {
 		//Iterate through all monsters and select the one to shoot
 		Monster selectedMonster = null;
 		for(Monster monster: monsterList) {
 			
 			//Check if the monster in range
-			int distance = distance(getX(), getY(), monster.getX(), monster.getY());
-			if(distance <= maxRange && distance >= minRange) {
+			int distance = distance(getX(), getY(), monster.x, monster.y);
+			if(distance <= this.getMaxRange() && distance >= this.getMinRange()) {
 				
 				//Chose which monster to shoot if more than one is in range
 				if(selectedMonster != null) {
 					//Decide which monster is closer to endzone, chose endzone as in demo (440,0)
-					if(distance(monster.getX(),monster.getY(),game.getEndzonex(),game.getEndzoney()) < distance(selectedMonster.getX(),selectedMonster.getY(),game.getEndzonex(),game.getEndzoney())) {
+					if(distance(monster.x,monster.y,game.getEndzonex(),game.getEndzoney()) < distance(selectedMonster.x,selectedMonster.y,game.getEndzonex(),game.getEndzoney())) {
 						selectedMonster = monster;
 					}
 				}
@@ -57,10 +59,9 @@ public class CatapultTower extends BasicTower{
 				}
 			}
 		}
-
 		
 		return selectedMonster;
-	}
+	}*/
 	
 	@Override
 	public void shoot(Game game) {
@@ -87,5 +88,6 @@ public class CatapultTower extends BasicTower{
 	@Override
 	public void upgradeTower() {
 		coolDownTime = coolDownTime - 1;
+		this.setLevel(this.getLevel()+1);
 	}
 }

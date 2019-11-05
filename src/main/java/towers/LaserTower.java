@@ -17,6 +17,11 @@ public class LaserTower extends BasicTower{
 		this.setImg("/laserTower.png");
 	}
 	
+	@Override
+	public String getType() {
+		return "Laser";
+	}
+	
 	boolean checkIfOnBeam(Monster selectedMonster, Monster monster) {
 	
 		int vx = selectedMonster.getX()-getX();
