@@ -27,8 +27,9 @@ public class LaserTower extends BasicTower{
 		int vx = selectedMonster.getX()-getX();
 		int vy = selectedMonster.getY()-getY();
 		double a = (monster.getX()-getX())/vx;
-		
+
 		if(a>0 && getY() + a * vy - laserWidth < monster.getY() && monster.getY() < getY() + a * vy + laserWidth) {
+
 			return true;
 		}
 		else {

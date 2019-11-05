@@ -14,7 +14,6 @@ public class Game {
 	private List<BasicTower> towerList;
 	private List<Monster> monsterList;
 	private List<Object> attackList;
-	private Monster monstertoadd;
 	
 	
 	public Game(int resources) {
@@ -23,7 +22,6 @@ public class Game {
 		towerList = new ArrayList<BasicTower>();
 		setMonsterList(new ArrayList<Monster>());
 		setAttackList(new ArrayList<Object>());
-		monstertoadd = null;
 		gameOver = false;
 		endzonex = 11; //assume grid coordinates of endzone!
 		endzoney = 0;
@@ -127,6 +125,37 @@ public class Game {
 	
 	public boolean buildTower(BasicTower tower) {
 		towerList.add(tower);
+		return true;
+	}
+	public void printTowers() {
+		for (BasicTower tower : towerList) {
+			System.out.println("Tower" + tower.getType() + "   x: " + tower.getX() + "  y: " + tower.getY());
+		}
+	}
+	
+	public BasicTower getTower(int i, int j) {
+		for (BasicTower tower : towerList) {
+			if (tower.getX()==i && tower.getY()==j) {
+				return tower;
+			}
+		}
+		return null;
+	}
+	public boolean isTower(BasicTower tower) {
+		for (BasicTower towerenum : towerList) {
+			if (towerenum == tower) {
+				return true;
+			}
+		}
+		return false;
+	}
+	public boolean destroyTower(int i, int j) {
+		for (BasicTower tower : towerList) {
+			if (tower.getX()==i && tower.getY()==j) {
+				towerList.remove(tower);
+				return true;
+			}
+		}
 		return false;
 	}
 }
