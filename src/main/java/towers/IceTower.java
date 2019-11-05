@@ -8,12 +8,12 @@ import java.util.List;
 
 public class IceTower extends BasicTower{
 	
-	//private int slowingFactor; not used
+	private int slowingFactor;
 	private int slowingFrames;
 	
 	public IceTower(int x,int y){
 		super(x,y);
-		//this.slowingFactor = 2;
+		this.slowingFactor = 2;
 		this.slowingFrames = 5;
 		this.setAttackPower(0);
 		this.setImg("/iceTower.png");
@@ -25,8 +25,7 @@ public class IceTower extends BasicTower{
 		//shoot Monster
 				if(selectedMonster != null) {
 					game.getMonsterList().get(game.getMonsterList().indexOf(selectedMonster)).setHp(selectedMonster.getHp() - getAttackPower());
-					//game.getMonsterList().get(game.getMonsterList().indexOf(selectedMonster)).setSpeed(selectedMonster.getSpeed()/slowingFactor);
-					//reducing the speed in the move() function of monsters itself!
+					game.getMonsterList().get(game.getMonsterList().indexOf(selectedMonster)).setSpeed(selectedMonster.getInitialSpeed()/slowingFactor);
 					game.getMonsterList().get(game.getMonsterList().indexOf(selectedMonster)).setSlowForFrames(slowingFrames);
 					
 					List<Object> attackPair = new ArrayList<Object>();
@@ -38,8 +37,6 @@ public class IceTower extends BasicTower{
 	
 	@Override
 	public void upgradeTower() {
-		//slowingFactor = slowingFactor + 1;
-		//description says that duration needs to be upgraded!
 		slowingFrames = slowingFrames + 2;
 	}
 	

@@ -13,17 +13,27 @@ public class Monster {
 	Game game;
 	private int hp;
 	private int speed;
+	private int initialSpeed;
 	private int slowForFrames;
 	private int x;
 	private int y;
 	private boolean alive;
 	private String img;
+	private String type;
 	
 	public Monster(int x, int y, Game game) {
 		this.game = game;
 		this.setX(x);
 		this.setY(y);
 		this.setAlive(true);
+	}
+	
+	public String getType() {
+		return type;
+	}
+	
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 	
@@ -62,6 +72,14 @@ public class Monster {
 	}
 
 
+
+	public int getInitialSpeed() {
+		return initialSpeed;
+	}
+
+	public void setInitialSpeed(int initialSpeed) {
+		this.initialSpeed = initialSpeed;
+	}
 
 	public int getSpeed() {
 		return speed;
@@ -120,8 +138,12 @@ public class Monster {
 		}
 		else {
 			if (slowForFrames > 0) {
-				this.moveTowardsEndzone(this.getSpeed()/2);
+				this.moveTowardsEndzone(speed);
+				
 				slowForFrames = slowForFrames - 1;
+				if (slowForFrames == 0) {
+					speed = initialSpeed;
+				}
 			}
 			else {
 				this.moveTowardsEndzone(speed);
@@ -147,11 +169,12 @@ public class Monster {
 			//endzone position in pixel or grid coordinates? ASSUME GRID COORDINATES:
 			if (gridIdxX == game.getEndzonex() && gridIdxY == game.getEndzoney()) {
 				game.setGameOver(true);
+				System.out.println("Gameover");
 				break;
 			}
 			
 			//if field at grid position gridIdxX+1 is white, move there!
-			if (gridIdxY % 2 == 0 || (gridIdxX+1) == ((gridIdxY + 1) / 2 % 2) * 11) {
+			if ((gridIdxX+1) % 2 == 0 || (gridIdxY) == ((gridIdxX + 2) / 2 % 2) * 11) {
 				x = x + gridWidth;
 			}
 			else if (gridIdxX % 4 == 0) {
