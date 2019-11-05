@@ -72,6 +72,8 @@ public class CatapultTower extends BasicTower{
 						
 						for(Monster monster: game.getMonsterList()) {
 							if(checkIfInZone(selectedMonster, monster)) {
+								//System.out.println("heloooooo2");
+
 								game.getMonsterList().get(game.getMonsterList().indexOf(monster)).setHp(selectedMonster.getHp() - getAttackPower());
 								List<Object> attackPair = new ArrayList<Object>();
 								attackPair.add(this);

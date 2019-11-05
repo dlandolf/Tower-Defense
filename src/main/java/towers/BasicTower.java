@@ -124,7 +124,7 @@ public class BasicTower {
 		//shoot Monster
 				if(selectedMonster != null) {
 					game.getMonsterList().get(game.getMonsterList().indexOf(selectedMonster)).setHp(selectedMonster.getHp() - getAttackPower());
-					
+					//System.out.println("heloooooo2");
 					List<Object> attackPair = new ArrayList<Object>();
 					attackPair.add(this);
 					attackPair.add(selectedMonster);

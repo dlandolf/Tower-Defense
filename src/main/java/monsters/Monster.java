@@ -128,13 +128,12 @@ public class Monster {
 	
 	
 	//move monsters and delete them if they died in the last round.
-	public boolean move(int idx) {
-		
+	public void move(int idx) {
+		//System.out.println(hp);
 		//remove dead monsters from list!
 		if (!alive) {
 			//remove collision image?
 			game.getMonsterList().remove(idx);
-			return true;
 		}
 		else {
 			if (slowForFrames > 0) {
@@ -153,7 +152,6 @@ public class Monster {
 			
 			//what to do if GAMEOVER?
 			
-			return true;
 		}
 		
 	}
@@ -166,12 +164,19 @@ public class Monster {
 			int gridIdxX = (int) x/gridWidth;
 			int gridIdxY = (int) y/gridHeight;
 			
-			//endzone position in pixel or grid coordinates? ASSUME GRID COORDINATES:
-			if (gridIdxX == game.getEndzonex() && gridIdxY == game.getEndzoney()) {
+			//endzone position in pixel or grid coordinates? ASSUME PIXEL COORDINATES:
+			if (gridIdxX == (int) game.getEndzonex()/gridWidth && gridIdxY == (int) game.getEndzoney()/gridHeight) {
 				game.setGameOver(true);
 				System.out.println("Gameover");
 				break;
 			}
+				
+			/*If GRID coordinates:
+			if (gridIdxX == game.getEndzonex() && gridIdxY == game.getEndzoney()) {
+				game.setGameOver(true);
+				System.out.println("Gameover");
+				break;
+			}*/
 			
 			//if field at grid position gridIdxX+1 is white, move there!
 			if ((gridIdxX+1) % 2 == 0 || (gridIdxY) == ((gridIdxX + 2) / 2 % 2) * 11) {
@@ -188,16 +193,14 @@ public class Monster {
 		}
 	}
 	
-	public boolean updateAlive() {
+	public void updateAlive() {
 		if (hp > 0) {
-			return true;
 		}
 		else {
 			alive = false;
 			img = "/collision.png";
 			game.setResources(game.getResources() + 200);
 		}
-		return false;
 	}
 	
 	public void replenishHP() {

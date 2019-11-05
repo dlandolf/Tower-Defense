@@ -23,7 +23,7 @@ public class Game {
 		setMonsterList(new ArrayList<Monster>());
 		setAttackList(new ArrayList<Object>());
 		gameOver = false;
-		endzonex = 11; //assume grid coordinates of endzone!
+		endzonex = 440; //assume pixel coordinates of endzone!
 		endzoney = 0;
 	}
 	
@@ -74,18 +74,14 @@ public class Game {
 	
 	public boolean nextframe () {
 		frameId++;
-		//for (Monster monster : getMonsterList()) {
-		//	if (monster.move()) return true;
-		//}
 		for (int idx = 0; idx < getMonsterList().size(); idx++) {
 			Monster monster = getMonsterList().get(idx);
-			if (monster.move(idx)) return true;
+			monster.move(idx);
 		}
 		
 		Monster newMonster = addNewMonster();
 		if (newMonster != null) {
 			getMonsterList().add(newMonster);
-			//requirement to print <type>:<HP> of generated monsters
 			System.out.println(newMonster.getType() + ":" + newMonster.getHp());
 		}
 
@@ -94,23 +90,19 @@ public class Game {
 		}
 		
 		for (Monster monster : getMonsterList()) {
-			if (monster.updateAlive()) return true;
+			monster.updateAlive();
 		}
 		
 		return false;
 	}
 	
-	//TODO: it adds only the first monster...!?
 	public Monster addNewMonster() {
-		//every second frame a monster is created with the sequence: fox, unicorn, penguin.
+		//every second frame a monster is created
 		int spawnX = sample.MyController.getGridWidth()/2;
 		int spawnY = sample.MyController.getGridHeight()/2;
 		Monster addmonster = null;
 		
-		if (frameId == 1) {
-			addmonster = new FoxMonster(spawnX, spawnY, this); 
-		}
-		else if ((frameId-1) % 6 == 0) {
+		if ((frameId-1) % 6 == 0) {
 			addmonster = new PenguinMonster(spawnX, spawnY, this); 
 		}
 		else if ((frameId-1) % 4 == 0) {

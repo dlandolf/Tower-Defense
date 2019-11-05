@@ -228,7 +228,6 @@ class MouseEnteredEventHandler implements EventHandler<MouseEvent>{
 			return;
 		}
 		if (!paneArena.getChildren().contains(circle)) {
-			System.out.println(tower.getLevel());
 			infos.setText(tower.getType() + "#" + tower.getLevel()
 			+ "\nRange " + tower.getMaxRange());
 			paneArena.getChildren().addAll(circle, circle2, infos);
@@ -377,9 +376,13 @@ class DragDroppedEventHandler implements EventHandler<DragEvent> {
 		Dragboard db = event.getDragboard();
 		boolean success = false;
 		if (db.hasString()) {
+			//set coordinates of tower as the middle of the grid that it is in:
+			int gridX = (int)((Label) event.getGestureTarget()).getLayoutX()/MyController.getGridWidth();
+			int gridY = (int)((Label) event.getGestureTarget()).getLayoutY()/MyController.getGridHeight();
+			
 			BasicTower newTower = newInstance(ValidatorType.valueOf(changeToEnum(db.getString())), 
-					((int)((Label) event.getGestureTarget()).getLayoutX())/MyController.getGridWidth(), 
-					((int)((Label) event.getGestureTarget()).getLayoutY())/MyController.getGridHeight());
+					((int) (gridX+0.5)*MyController.getGridWidth()), 
+					((int) (gridY+0.5)*MyController.getGridHeight()));	//position needs to be in pixels!
 			if (mc.addTower(newTower, ((Label) event.getGestureTarget()))) {
 				Image image = new Image(getClass().getResourceAsStream(newTower.getImg()), 40, 40, false, false);
 				((Label) event.getGestureTarget()).setGraphic(new ImageView(image));
