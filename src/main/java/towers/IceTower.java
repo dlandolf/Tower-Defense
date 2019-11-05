@@ -20,6 +20,11 @@ public class IceTower extends BasicTower{
 	}
 	
 	@Override
+	public String getType() {
+		return "Ice";
+	}
+	
+	@Override
 	public void shoot(Game game) {
 		Monster selectedMonster = selectMonster(game.getMonsterList(), game);
 		//shoot Monster
@@ -38,6 +43,7 @@ public class IceTower extends BasicTower{
 	@Override
 	public void upgradeTower() {
 		slowingFactor = slowingFactor + 1;
+		this.setLevel(this.getLevel()+1);
 	}
 	
 	
