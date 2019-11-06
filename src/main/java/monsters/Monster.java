@@ -3,6 +3,8 @@ package monsters;
 import general.Game;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -18,14 +20,30 @@ public class Monster {
 	private int x;
 	private int y;
 	private boolean alive;
+	private boolean isNew;
 	private String img;
 	private String type;
+	private Label label;
+	
 	
 	public Monster(int x, int y, Game game) {
 		this.game = game;
 		this.setX(x);
 		this.setY(y);
 		this.setAlive(true);
+		setIsNew(true);
+	}
+	
+	public Label getLabel() {
+		return label;
+	}
+	
+	public void updateLabel() {
+		Image image = new Image(getClass().getResourceAsStream(this.getImg()), 20, 20, false, false);
+		label = new Label();
+		label.setLayoutX(x-sample.MyController.getGridWidth()/4);
+		label.setLayoutY(y-sample.MyController.getGridHeight()/4);
+		label.setGraphic(new ImageView(image));
 	}
 	
 	public String getType() {
@@ -127,15 +145,25 @@ public class Monster {
 	
 	
 	
+	public boolean getIsNew() {
+		return isNew;
+	}
+
+	public void setIsNew(boolean isNew) {
+		this.isNew = isNew;
+	}
+
 	//move monsters and delete them if they died in the last round.
 	public void move(int idx) {
+		setIsNew(false);
 		//System.out.println(hp);
 		//remove dead monsters from list!
-		if (!alive) {
+		//if (!alive) {
 			//remove collision image?
-			game.getMonsterList().remove(idx);
-		}
-		else {
+		//	game.getMonsterList().remove(idx);
+		//}
+		
+		if (alive) {
 			if (slowForFrames > 0) {
 				this.moveTowardsEndzone(speed);
 				
@@ -147,6 +175,8 @@ public class Monster {
 			else {
 				this.moveTowardsEndzone(speed);
 			}
+			
+			//this.updateLabel();
 			
 			this.replenishHP();
 			

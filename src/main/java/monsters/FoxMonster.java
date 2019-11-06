@@ -1,5 +1,5 @@
 package monsters;
-
+import javafx.scene.control.Label;
 import general.Game;
 
 public class FoxMonster extends Monster {
@@ -11,6 +11,7 @@ public class FoxMonster extends Monster {
 		this.setSpeed(this.getInitialSpeed());
 		this.setImg("/fox.png");
 		this.setType("Fox");
+		this.updateLabel();
 	}
 	
 }

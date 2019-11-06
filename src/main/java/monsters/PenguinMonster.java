@@ -13,6 +13,7 @@ public class PenguinMonster extends Monster {
 		this.setSpeed(this.getInitialSpeed());
 		this.setImg("/penguin.png");
 		this.setType("Penguin");
+		this.updateLabel();
 	}
 	
 	@Override

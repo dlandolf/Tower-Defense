@@ -11,6 +11,7 @@ public class UnicornMonster extends Monster {
 		this.setSpeed(this.getInitialSpeed());
 		this.setImg("/unicorn.png");
 		this.setType("Unicorn");
+		this.updateLabel();
 	}
 
 }

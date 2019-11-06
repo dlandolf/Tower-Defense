@@ -91,6 +91,7 @@ public class Game {
 		
 		for (Monster monster : getMonsterList()) {
 			monster.updateAlive();
+			//monster.updateLabel();
 		}
 		
 		return false;
