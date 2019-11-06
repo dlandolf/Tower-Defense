@@ -28,7 +28,7 @@ public class CatapultTower extends BasicTower{
 	
 	boolean checkIfInZone(Monster selectedMonster, Monster monster) {
 		
-		if(distance(selectedMonster.x,selectedMonster.y, monster.x, monster.y) <= damageRadius) {
+		if(distance(selectedMonster.getX(),selectedMonster.getY(), monster.getX(), monster.getY()) <= damageRadius) {
 			return true;
 		}
 		else {
@@ -59,7 +59,6 @@ public class CatapultTower extends BasicTower{
 				}
 			}
 		}
-
 		
 		return selectedMonster;
 	}*/
@@ -73,7 +72,9 @@ public class CatapultTower extends BasicTower{
 						
 						for(Monster monster: game.getMonsterList()) {
 							if(checkIfInZone(selectedMonster, monster)) {
-								game.getMonsterList().get(game.getMonsterList().indexOf(monster)).hp = selectedMonster.hp - getAttackPower();
+								//System.out.println("heloooooo2");
+
+								game.getMonsterList().get(game.getMonsterList().indexOf(monster)).setHp(selectedMonster.getHp() - getAttackPower());
 								List<Object> attackPair = new ArrayList<Object>();
 								attackPair.add(this);
 								attackPair.add(monster);

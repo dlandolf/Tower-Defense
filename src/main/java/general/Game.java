@@ -9,11 +9,11 @@ public class Game {
 	private int endzonex;
 	private int endzoney;
 	private int frameId;
+	private boolean gameOver;
 	
 	private List<BasicTower> towerList;
 	private List<Monster> monsterList;
 	private List<Object> attackList;
-	private Monster monstertoadd;
 	
 	
 	public Game(int resources) {
@@ -22,9 +22,18 @@ public class Game {
 		towerList = new ArrayList<BasicTower>();
 		setMonsterList(new ArrayList<Monster>());
 		setAttackList(new ArrayList<Object>());
-		monstertoadd = null;
+		gameOver = false;
+		endzonex = 440; //assume pixel coordinates of endzone!
+		endzoney = 0;
 	}
 	
+	public boolean getGameOver() {
+		return gameOver;
+	}
+	
+	public void setGameOver(boolean gameOver) {
+		this.gameOver = gameOver;
+	}
 	
 	public int getEndzonex() {
 		return endzonex;
@@ -65,22 +74,46 @@ public class Game {
 	
 	public boolean nextframe () {
 		frameId++;
-		//for (Monster monster : getMonsterList()) {
-			//if (monster.move()) return true;
-		//}
+		for (int idx = 0; idx < getMonsterList().size(); idx++) {
+			Monster monster = getMonsterList().get(idx);
+			monster.move(idx);
+		}
+		
 		Monster newMonster = addNewMonster();
 		if (newMonster != null) {
 			getMonsterList().add(newMonster);
+			System.out.println(newMonster.getType() + ":" + newMonster.getHp());
 		}
 
 		for (BasicTower tower : towerList) {
 			tower.shoot(this); //switch to private and add monsterlist as argument
 		}
+		
+		for (Monster monster : getMonsterList()) {
+			monster.updateAlive();
+			//monster.updateLabel();
+		}
+		
 		return false;
 	}
 	
 	public Monster addNewMonster() {
-		return monstertoadd;
+		//every second frame a monster is created
+		int spawnX = sample.MyController.getGridWidth()/2;
+		int spawnY = sample.MyController.getGridHeight()/2;
+		Monster addmonster = null;
+		
+		if ((frameId-1) % 6 == 0) {
+			addmonster = new PenguinMonster(spawnX, spawnY, this); 
+		}
+		else if ((frameId-1) % 4 == 0) {
+			addmonster = new UnicornMonster(spawnX, spawnY, this); 
+		}
+		else if ((frameId-1) % 2 == 0) {
+			addmonster = new FoxMonster(spawnX, spawnY, this); 
+		}
+		
+		return addmonster;
 	}
 	
 	public boolean buildTower(BasicTower tower) {

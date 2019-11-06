@@ -17,8 +17,12 @@ import javafx.scene.shape.Arc;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import general.*;
 import towers.*;
+import monsters.*;
 
 public class MyController {
 	@FXML
@@ -51,6 +55,7 @@ public class MyController {
 	private static final int MAX_V_NUM_GRID = 12;
 	private static final int START_RESOURCES = 1500;
 	private Label grids[][] = new Label[MAX_V_NUM_GRID][MAX_H_NUM_GRID]; // the grids on arena
+	private List<Label> monsterLabelList = new ArrayList<Label>();
 	private Game game;
 	
 	
@@ -62,11 +67,44 @@ public class MyController {
 		return GRID_HEIGHT;
 	}
 
+	public List<Label> getMonsterLabelList() {
+		return monsterLabelList;
+	}
+
+	public void setMonsterLabelList(List<Label> monsterLabelList) {
+		this.monsterLabelList = monsterLabelList;
+	}
+
 	@FXML
 	private void nextFrame() {
 		String nbAsStr = String.valueOf(game.getResources());
 		labelMoney.setText(nbAsStr);
 		game.nextframe();
+		updateMonsterLabels();
+	}
+	
+	public void updateMonsterLabels() {
+		//TODO: if a monster dies, it is removed right away without showing the collision image AND an out of bound error comes up!
+		//for all monsters: update labels AND delete old labels...
+		for (Monster monster : game.getMonsterList()) {
+			if (!monster.getAlive()) {
+				getMonsterLabelList().get(game.getMonsterList().indexOf(monster)).setGraphic(null);
+				//paneArena.getChildren().remove(paneArena.getChildren().indexOf(getMonsterLabelList().get(game.getMonsterList().indexOf(monster))));
+				//getMonsterLabelList().remove(game.getMonsterList().indexOf(monster));
+				game.getMonsterList().remove(game.getMonsterList().indexOf(monster));
+			}
+			else if (monster.getIsNew()) {
+				getMonsterLabelList().add(monster.getLabel());
+				paneArena.getChildren().addAll(monster.getLabel());
+			}
+			else {
+				Image image = new Image(getClass().getResourceAsStream(monster.getImg()), 20, 20, false, false);
+				getMonsterLabelList().get(game.getMonsterList().indexOf(monster)).setLayoutX(monster.getX()-sample.MyController.getGridWidth()/4);
+				getMonsterLabelList().get(game.getMonsterList().indexOf(monster)).setLayoutY(monster.getY()-sample.MyController.getGridHeight()/4);
+				getMonsterLabelList().get(game.getMonsterList().indexOf(monster)).setGraphic(new ImageView(image));
+			}
+		}
+		
 	}
 	
 	public void updateMoney(int money) {
@@ -228,7 +266,6 @@ class MouseEnteredEventHandler implements EventHandler<MouseEvent>{
 			return;
 		}
 		if (!paneArena.getChildren().contains(circle)) {
-			System.out.println(tower.getLevel());
 			infos.setText(tower.getType() + "#" + tower.getLevel()
 			+ "\nRange " + tower.getMaxRange());
 			paneArena.getChildren().addAll(circle, circle2, infos);
@@ -377,9 +414,13 @@ class DragDroppedEventHandler implements EventHandler<DragEvent> {
 		Dragboard db = event.getDragboard();
 		boolean success = false;
 		if (db.hasString()) {
+			//set coordinates of tower as the middle of the grid that it is in:
+			int gridX = (int)((Label) event.getGestureTarget()).getLayoutX()/MyController.getGridWidth();
+			int gridY = (int)((Label) event.getGestureTarget()).getLayoutY()/MyController.getGridHeight();
+			
 			BasicTower newTower = newInstance(ValidatorType.valueOf(changeToEnum(db.getString())), 
-					((int)((Label) event.getGestureTarget()).getLayoutX())/MyController.getGridWidth(), 
-					((int)((Label) event.getGestureTarget()).getLayoutY())/MyController.getGridHeight());
+					((int) (gridX+0.5)*MyController.getGridWidth()), 
+					((int) (gridY+0.5)*MyController.getGridHeight()));	//position needs to be in pixels!
 			if (mc.addTower(newTower, ((Label) event.getGestureTarget()))) {
 				Image image = new Image(getClass().getResourceAsStream(newTower.getImg()), 40, 40, false, false);
 				((Label) event.getGestureTarget()).setGraphic(new ImageView(image));
