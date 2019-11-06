@@ -13,6 +13,7 @@ public class Game {
 	
 	private List<BasicTower> towerList;
 	private List<Monster> monsterList;
+	private List<Monster> deadMonsterList;
 	private List<Object> attackList;
 	
 	
@@ -21,6 +22,7 @@ public class Game {
 		this.setResources(resources);
 		towerList = new ArrayList<BasicTower>();
 		setMonsterList(new ArrayList<Monster>());
+		setDeadMonsterList(new ArrayList<Monster>());
 		setAttackList(new ArrayList<Object>());
 		gameOver = false;
 		endzonex = 440; //assume pixel coordinates of endzone!
@@ -50,6 +52,14 @@ public class Game {
 	public void setMonsterList(List<Monster> monsterList) {
 		this.monsterList = monsterList;
 	}
+	
+	public List<Monster> getDeadMonsterList() {
+		return deadMonsterList;
+	}
+
+	public void setDeadMonsterList(List<Monster> deadMonsterList) {
+		this.deadMonsterList = deadMonsterList;
+	}
 
 	public List<Object> getAttackList() {
 		return attackList;
@@ -74,6 +84,9 @@ public class Game {
 	
 	public boolean nextframe () {
 		frameId++;
+		//clear deadmonsterlist
+		getDeadMonsterList().clear();
+		
 		for (int idx = 0; idx < getMonsterList().size(); idx++) {
 			Monster monster = getMonsterList().get(idx);
 			monster.move(idx);
@@ -91,7 +104,6 @@ public class Game {
 		
 		for (Monster monster : getMonsterList()) {
 			monster.updateAlive();
-			//monster.updateLabel();
 		}
 		
 		return false;

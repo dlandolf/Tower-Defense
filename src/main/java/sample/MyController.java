@@ -84,16 +84,13 @@ public class MyController {
 	}
 	
 	public void updateMonsterLabels() {
-		//TODO: if a monster dies, it is removed right away without showing the collision image AND an out of bound error comes up!
-		//for all monsters: update labels AND delete old labels...
+		for (Monster deadmonster : game.getDeadMonsterList()) {
+			paneArena.getChildren().remove(paneArena.getChildren().indexOf(getMonsterLabelList().get(game.getDeadMonsterList().indexOf(deadmonster))));
+			getMonsterLabelList().remove(game.getDeadMonsterList().indexOf(deadmonster));
+		}
+		
 		for (Monster monster : game.getMonsterList()) {
-			if (!monster.getAlive()) {
-				getMonsterLabelList().get(game.getMonsterList().indexOf(monster)).setGraphic(null);
-				//paneArena.getChildren().remove(paneArena.getChildren().indexOf(getMonsterLabelList().get(game.getMonsterList().indexOf(monster))));
-				//getMonsterLabelList().remove(game.getMonsterList().indexOf(monster));
-				game.getMonsterList().remove(game.getMonsterList().indexOf(monster));
-			}
-			else if (monster.getIsNew()) {
+			if (monster.getIsNew()) {
 				getMonsterLabelList().add(monster.getLabel());
 				paneArena.getChildren().addAll(monster.getLabel());
 			}

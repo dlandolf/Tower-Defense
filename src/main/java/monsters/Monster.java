@@ -1,15 +1,9 @@
 package monsters;
 
 import general.Game;
-import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
-import sample.MyController;
 
 public class Monster {
 	Game game;
@@ -153,16 +147,9 @@ public class Monster {
 		this.isNew = isNew;
 	}
 
-	//move monsters and delete them if they died in the last round.
 	public void move(int idx) {
 		setIsNew(false);
-		//System.out.println(hp);
-		//remove dead monsters from list!
-		//if (!alive) {
-			//remove collision image?
-		//	game.getMonsterList().remove(idx);
-		//}
-		
+	
 		if (alive) {
 			if (slowForFrames > 0) {
 				this.moveTowardsEndzone(speed);
@@ -176,12 +163,13 @@ public class Monster {
 				this.moveTowardsEndzone(speed);
 			}
 			
-			//this.updateLabel();
-			
 			this.replenishHP();
 			
 			//what to do if GAMEOVER?
-			
+		}
+		else {
+			game.getDeadMonsterList().add(this);
+			game.getMonsterList().remove(game.getMonsterList().indexOf(this));
 		}
 		
 	}
@@ -229,7 +217,7 @@ public class Monster {
 		else {
 			alive = false;
 			img = "/collision.png";
-			game.setResources(game.getResources() + 200);
+			game.setResources(game.getResources() + 20);
 		}
 	}
 	
