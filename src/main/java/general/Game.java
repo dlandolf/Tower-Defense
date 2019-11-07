@@ -165,4 +165,13 @@ public class Game {
 		}
 		return false;
 	}
+	
+	public boolean isMonster(Monster monster) {
+		for (Monster monsterenum : monsterList) {
+			if (monsterenum == monster) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
