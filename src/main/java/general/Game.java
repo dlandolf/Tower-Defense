@@ -84,7 +84,7 @@ public class Game {
 	
 	public boolean nextframe () {
 		frameId++;
-		//clear deadmonsterlist
+
 		getDeadMonsterList().clear();
 		
 		for (int idx = 0; idx < getMonsterList().size(); idx++) {
@@ -92,14 +92,17 @@ public class Game {
 			monster.move(idx);
 		}
 		
-		Monster newMonster = addNewMonster();
-		if (newMonster != null) {
-			getMonsterList().add(newMonster);
-			System.out.println(newMonster.getType() + ":" + newMonster.getHp());
-		}
-
-		for (BasicTower tower : towerList) {
-			tower.shoot(this); //switch to private and add monsterlist as argument
+		if (!gameOver) {
+			
+			Monster newMonster = addNewMonster();
+			if (newMonster != null) {
+				getMonsterList().add(newMonster);
+				System.out.println(newMonster.getType() + ":" + newMonster.getHp() + " generated");
+			}
+			
+			for (BasicTower tower : towerList) {
+				tower.shoot(this); //switch to private and add monsterlist as argument
+			}
 		}
 		
 		for (Monster monster : getMonsterList()) {
@@ -114,16 +117,15 @@ public class Game {
 		int spawnX = sample.MyController.getGridWidth()/2;
 		int spawnY = sample.MyController.getGridHeight()/2;
 		Monster addmonster = null;
-		
-		if ((frameId-1) % 6 == 0) {
-			addmonster = new PenguinMonster(spawnX, spawnY, this); 
-		}
-		else if ((frameId-1) % 4 == 0) {
-			addmonster = new UnicornMonster(spawnX, spawnY, this); 
-		}
-		else if ((frameId-1) % 2 == 0) {
-			addmonster = new FoxMonster(spawnX, spawnY, this); 
-		}
+			if ((frameId-1) % 6 == 0) {
+				addmonster = new PenguinMonster(spawnX, spawnY, this); 
+			}
+			else if ((frameId-1) % 4 == 0) {
+				addmonster = new UnicornMonster(spawnX, spawnY, this); 
+			}
+			else if ((frameId-1) % 2 == 0) {
+				addmonster = new FoxMonster(spawnX, spawnY, this); 
+			}
 		
 		return addmonster;
 	}

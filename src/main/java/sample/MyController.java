@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.*;
@@ -79,8 +81,17 @@ public class MyController {
 	private void nextFrame() {
 		String nbAsStr = String.valueOf(game.getResources());
 		labelMoney.setText(nbAsStr);
-		game.nextframe();
-		updateMonsterLabels();
+		if (!game.getGameOver()) {
+			game.nextframe();
+			updateMonsterLabels();
+			if (game.getGameOver()) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Gameover");
+				alert.setHeaderText("Gameover!");
+				alert.setContentText("You lost.");
+				alert.showAndWait();
+			}
+		}
 	}
 	
 	public void updateMonsterLabels() {

@@ -38,6 +38,7 @@ public class Monster {
 		label.setLayoutX(x-sample.MyController.getGridWidth()/4);
 		label.setLayoutY(y-sample.MyController.getGridHeight()/4);
 		label.setGraphic(new ImageView(image));
+		
 	}
 	
 	public String getType() {
@@ -165,7 +166,6 @@ public class Monster {
 			
 			this.replenishHP();
 			
-			//what to do if GAMEOVER?
 		}
 		else {
 			game.getDeadMonsterList().add(this);
