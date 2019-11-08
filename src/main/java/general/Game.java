@@ -86,10 +86,13 @@ public class Game {
 		frameId++;
 
 		getDeadMonsterList().clear();
+
+		for (Monster monster : getMonsterList()) {
+			monster.move();
+		}
 		
-		for (int idx = 0; idx < getMonsterList().size(); idx++) {
-			Monster monster = getMonsterList().get(idx);
-			monster.move(idx);
+		for (Monster deadmonster : getDeadMonsterList()) {
+				getMonsterList().remove(getMonsterList().indexOf(deadmonster));
 		}
 		
 		if (!gameOver) {

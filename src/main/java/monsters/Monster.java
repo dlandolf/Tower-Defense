@@ -149,7 +149,7 @@ public class Monster {
 		this.isNew = isNew;
 	}
 
-	public void move(int idx) {
+	public void move() {
 		setIsNew(false);
 	
 		if (alive) {
@@ -170,7 +170,6 @@ public class Monster {
 		}
 		else {
 			game.getDeadMonsterList().add(this);
-			game.getMonsterList().remove(game.getMonsterList().indexOf(this));
 		}
 		
 	}
@@ -214,11 +213,12 @@ public class Monster {
 	
 	public void updateAlive() {
 		if (hp > 0) {
+			return;
 		}
 		else {
 			alive = false;
 			img = "/collision.png";
-			game.setResources(game.getResources() + 20);
+			game.setResources(game.getResources() + 100);
 		}
 	}
 	
