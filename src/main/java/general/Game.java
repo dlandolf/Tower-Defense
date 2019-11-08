@@ -13,6 +13,7 @@ public class Game {
 	
 	private List<BasicTower> towerList;
 	private List<Monster> monsterList;
+	private List<Monster> deadMonsterList;
 	private List<Object> attackList;
 	
 	
@@ -21,6 +22,7 @@ public class Game {
 		this.setResources(resources);
 		towerList = new ArrayList<BasicTower>();
 		setMonsterList(new ArrayList<Monster>());
+		setDeadMonsterList(new ArrayList<Monster>());
 		setAttackList(new ArrayList<Object>());
 		gameOver = false;
 		endzonex = 440; //assume pixel coordinates of endzone!
@@ -50,6 +52,14 @@ public class Game {
 	public void setMonsterList(List<Monster> monsterList) {
 		this.monsterList = monsterList;
 	}
+	
+	public List<Monster> getDeadMonsterList() {
+		return deadMonsterList;
+	}
+
+	public void setDeadMonsterList(List<Monster> deadMonsterList) {
+		this.deadMonsterList = deadMonsterList;
+	}
 
 	public List<Object> getAttackList() {
 		return attackList;
@@ -74,24 +84,32 @@ public class Game {
 	
 	public boolean nextframe () {
 		frameId++;
-		for (int idx = 0; idx < getMonsterList().size(); idx++) {
-			Monster monster = getMonsterList().get(idx);
-			monster.move(idx);
+
+		getDeadMonsterList().clear();
+
+		for (Monster monster : getMonsterList()) {
+			monster.move();
 		}
 		
-		Monster newMonster = addNewMonster();
-		if (newMonster != null) {
-			getMonsterList().add(newMonster);
-			System.out.println(newMonster.getType() + ":" + newMonster.getHp());
+		for (Monster deadmonster : getDeadMonsterList()) {
+				getMonsterList().remove(getMonsterList().indexOf(deadmonster));
 		}
-
-		for (BasicTower tower : towerList) {
-			tower.shoot(this); //switch to private and add monsterlist as argument
+		
+		if (!gameOver) {
+			
+			Monster newMonster = addNewMonster();
+			if (newMonster != null) {
+				getMonsterList().add(newMonster);
+				System.out.println(newMonster.getType() + ":" + newMonster.getHp() + " generated");
+			}
+			
+			for (BasicTower tower : towerList) {
+				tower.shoot(this); //switch to private and add monsterlist as argument
+			}
 		}
 		
 		for (Monster monster : getMonsterList()) {
 			monster.updateAlive();
-			//monster.updateLabel();
 		}
 		
 		return false;
@@ -102,16 +120,15 @@ public class Game {
 		int spawnX = sample.MyController.getGridWidth()/2;
 		int spawnY = sample.MyController.getGridHeight()/2;
 		Monster addmonster = null;
-		
-		if ((frameId-1) % 6 == 0) {
-			addmonster = new PenguinMonster(spawnX, spawnY, this); 
-		}
-		else if ((frameId-1) % 4 == 0) {
-			addmonster = new UnicornMonster(spawnX, spawnY, this); 
-		}
-		else if ((frameId-1) % 2 == 0) {
-			addmonster = new FoxMonster(spawnX, spawnY, this); 
-		}
+			if ((frameId-1) % 6 == 0) {
+				addmonster = new PenguinMonster(spawnX, spawnY, this); 
+			}
+			else if ((frameId-1) % 4 == 0) {
+				addmonster = new UnicornMonster(spawnX, spawnY, this); 
+			}
+			else if ((frameId-1) % 2 == 0) {
+				addmonster = new FoxMonster(spawnX, spawnY, this); 
+			}
 		
 		return addmonster;
 	}
@@ -146,6 +163,15 @@ public class Game {
 		for (BasicTower tower : towerList) {
 			if (tower.getX()==i && tower.getY()==j) {
 				towerList.remove(tower);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean isMonster(Monster monster) {
+		for (Monster monsterenum : monsterList) {
+			if (monsterenum == monster) {
 				return true;
 			}
 		}

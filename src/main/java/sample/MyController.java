@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.*;
@@ -79,22 +81,31 @@ public class MyController {
 	private void nextFrame() {
 		String nbAsStr = String.valueOf(game.getResources());
 		labelMoney.setText(nbAsStr);
-		game.nextframe();
-		updateMonsterLabels();
+		if (!game.getGameOver()) {
+			game.nextframe();
+			updateMonsterLabels();
+			if (game.getGameOver()) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Gameover");
+				alert.setHeaderText("Gameover!");
+				alert.setContentText("You lost.");
+				alert.showAndWait();
+			}
+		}
 	}
 	
 	public void updateMonsterLabels() {
-		//TODO: if a monster dies, it is removed right away without showing the collision image AND an out of bound error comes up!
-		//for all monsters: update labels AND delete old labels...
+		
+		for (Monster deadmonster : game.getDeadMonsterList()) {
+			paneArena.getChildren().remove(paneArena.getChildren().indexOf(deadmonster.getLabel()));
+			getMonsterLabelList().remove(getMonsterLabelList().indexOf(deadmonster.getLabel()));
+		}
+		
 		for (Monster monster : game.getMonsterList()) {
-			if (!monster.getAlive()) {
-				getMonsterLabelList().get(game.getMonsterList().indexOf(monster)).setGraphic(null);
-				//paneArena.getChildren().remove(paneArena.getChildren().indexOf(getMonsterLabelList().get(game.getMonsterList().indexOf(monster))));
-				//getMonsterLabelList().remove(game.getMonsterList().indexOf(monster));
-				game.getMonsterList().remove(game.getMonsterList().indexOf(monster));
-			}
-			else if (monster.getIsNew()) {
+			if (monster.getIsNew()) {
+				Image image = new Image(getClass().getResourceAsStream(monster.getImg()), 20, 20, false, false);
 				getMonsterLabelList().add(monster.getLabel());
+				getMonsterLabelList().get(game.getMonsterList().indexOf(monster)).setGraphic(new ImageView(image));
 				paneArena.getChildren().addAll(monster.getLabel());
 			}
 			else {
@@ -103,7 +114,64 @@ public class MyController {
 				getMonsterLabelList().get(game.getMonsterList().indexOf(monster)).setLayoutY(monster.getY()-sample.MyController.getGridHeight()/4);
 				getMonsterLabelList().get(game.getMonsterList().indexOf(monster)).setGraphic(new ImageView(image));
 			}
+			
 		}
+		
+		for (int i = 0; i < MAX_V_NUM_GRID; i++)
+			for (int j = 0; j < MAX_H_NUM_GRID; j++) {
+				
+				if (j % 2 == 0 || i == ((j + 1) / 2 % 2) * (MAX_V_NUM_GRID - 1)) {
+					Label target = grids[i][j];
+					Label infos = new Label();
+					boolean monsterInField = false;
+					int nMonster = 0;
+					target.setOnMouseEntered(new MouseEnteredMonsterEventHandler(target, monsterInField, paneArena, infos));
+					target.setOnMouseExited(new MouseExitedMonsterEventHandler(target, monsterInField, paneArena, infos));
+					
+					for (Monster monster : game.getMonsterList()) {
+
+						if ((int) monster.getX()/getGridWidth() == j && (int) monster.getY()/getGridHeight() == i) {
+							if (!monsterInField) {
+								infos.setText(monster.getType() + " HP: " + monster.getHp());
+								infos.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+								infos.setStyle("-fx-border-color: black;");
+								
+								if (target.getLayoutX()== 400) {
+									infos.setLayoutX(target.getLayoutX()-80);
+								} else {
+									infos.setLayoutX(target.getLayoutX()+30);	
+								}
+								
+								if (target.getLayoutY()==0) {
+									infos.setLayoutY(target.getLayoutY()+30);
+								} else if (target.getLayoutY()== 440){
+									infos.setLayoutY(target.getLayoutY()-10);
+								} else {
+									infos.setLayoutY(target.getLayoutY()-10);	
+								}
+								infos.setMouseTransparent(true);
+								monsterInField = true;
+							}
+							else {
+								infos.setText(infos.getText() + "\n" + monster.getType() + " HP: " + monster.getHp());
+								if (target.getLayoutY()== 440){
+									infos.setLayoutY(target.getLayoutY()-10*nMonster);
+								}
+							}
+								
+							nMonster += 1;
+							target.setOnMouseEntered(new MouseEnteredMonsterEventHandler(target, monsterInField, paneArena, infos));
+							target.setOnMouseExited(new MouseExitedMonsterEventHandler(target, monsterInField, paneArena, infos));
+							
+						}
+						
+					}
+				}
+				
+
+			}
+		
+		
 		
 	}
 	
@@ -300,6 +368,53 @@ class MouseExitedEventHandler implements EventHandler<MouseEvent>{
 			return;
 		}
 		paneArena.getChildren().removeAll(circle, circle2, infos);
+	}
+}
+
+class MouseEnteredMonsterEventHandler implements EventHandler<MouseEvent>{
+	private Label source;
+	private AnchorPane paneArena;
+	private boolean monsterInField;
+	private Label infos;
+	
+	public MouseEnteredMonsterEventHandler(Label source, boolean monsterInField, AnchorPane pane, Label infos) {
+		this.source = source;
+		this.paneArena = pane;
+		this.monsterInField = monsterInField;
+		this.infos = infos;
+	}
+	
+	@Override 
+	public void handle(MouseEvent event) {
+		if (!monsterInField) { 
+			source.removeEventHandler(MouseEvent.MOUSE_ENTERED, this);
+			return;
+		}
+		paneArena.getChildren().addAll(infos);
+	}
+}
+
+
+class MouseExitedMonsterEventHandler implements EventHandler<MouseEvent>{
+	private Label source;
+	private AnchorPane paneArena;
+	private boolean monsterInField;
+	private Label infos;
+	
+	public MouseExitedMonsterEventHandler(Label source, boolean monsterInField, AnchorPane pane, Label infos) {
+		this.source = source;
+		this.paneArena = pane;
+		this.monsterInField = monsterInField;
+		this.infos = infos;
+	}
+	
+	@Override 
+	public void handle(MouseEvent event) {
+		if (!monsterInField) {
+			source.removeEventHandler(MouseEvent.MOUSE_EXITED, this);
+			return;
+		}
+		paneArena.getChildren().removeAll(infos);
 	}
 }
 

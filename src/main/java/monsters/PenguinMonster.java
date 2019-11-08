@@ -18,10 +18,10 @@ public class PenguinMonster extends Monster {
 	
 	@Override
 	public void replenishHP() {
-		if (this.getHp() + 2 <= initialHp) {
-			this.setHp(this.getHp() + 2);
-		}
-		else if (this.getHp() + 1 <= initialHp) {
+		//if (this.getHp() + 2 <= initialHp) {
+		//	this.setHp(this.getHp() + 2);
+		//}
+		if (this.getHp() + 1 <= initialHp) {
 			this.setHp(this.getHp() + 1);
 		}
 	}
