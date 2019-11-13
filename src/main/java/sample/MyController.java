@@ -22,7 +22,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import java.util.ArrayList;
 import java.util.List;
-
+import javafx.scene.shape.Line;
 import general.*;
 import towers.*;
 import monsters.*;
@@ -59,6 +59,7 @@ public class MyController {
 	private static final int START_RESOURCES = 1500;
 	private Label grids[][] = new Label[MAX_V_NUM_GRID][MAX_H_NUM_GRID]; // the grids on arena
 	private List<Label> monsterLabelList = new ArrayList<Label>();
+	private List<Line> lineList = new ArrayList<Line>();
 	private Game game;
 	private Button but1 = null;
 	private Button but2 = null;
@@ -81,11 +82,13 @@ public class MyController {
 
 	@FXML
 	private void nextFrame() {
+		removeLines();
 		String nbAsStr = String.valueOf(game.getResources());
 		labelMoney.setText(nbAsStr);
 		if (!game.getGameOver()) {
 			game.nextframe();
 			updateMonsterLabels();
+			updateLineList();
 			if (game.getGameOver()) {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Gameover");
@@ -183,6 +186,26 @@ public class MyController {
 		labelMoney.setText(nbAsStr);
 	}
 	
+	public void addLine(int i, int j, int k, int l) {
+		lineList.add(new Line(i, j, k, l));
+		System.out.println(i +" " + j +" " + k + "  " + l);
+	}
+	
+	public void updateLineList() {
+		for (Line line : lineList) {
+			System.out.println("eeeeee");
+			paneArena.getChildren().addAll(line);
+		}
+	}
+	
+	public void removeLines() {
+		for (Line line : lineList) {
+			paneArena.getChildren().remove(line);
+		}
+		lineList.clear();
+	}
+	
+	
 	public boolean addTower(BasicTower tower, Label lab) {
 		if (game.getResources()<100) return false;
 		updateMoney(-100);
@@ -251,7 +274,7 @@ public class MyController {
 		laserTowerImg.setGraphic(new ImageView(image));
 		image = new Image(getClass().getResourceAsStream("/catapult.png"), 40, 40, false, false);
 		catapultImg.setGraphic(new ImageView(image));
-		game = new Game(START_RESOURCES);
+		game = new Game(START_RESOURCES, this);
 		String nbAsStr = String.valueOf(START_RESOURCES);
 		labelMoney.setText(nbAsStr);
 		if (grids[0][0] != null)

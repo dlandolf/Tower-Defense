@@ -3,6 +3,7 @@ package general;
 import java.util.*;
 import towers.*;
 import monsters.*;
+import sample.*;
 
 public class Game {
 	private int resources;
@@ -15,9 +16,10 @@ public class Game {
 	private List<Monster> monsterList;
 	private List<Monster> deadMonsterList;
 	private List<Object> attackList;
+	private MyController mc;
 	
 	
-	public Game(int resources) {
+	public Game(int resources, MyController mc) {
 		this.frameId=0;
 		this.setResources(resources);
 		towerList = new ArrayList<BasicTower>();
@@ -27,6 +29,7 @@ public class Game {
 		gameOver = false;
 		endzonex = 440; //assume pixel coordinates of endzone!
 		endzoney = 0;
+		this.mc = mc;
 	}
 	
 	public boolean getGameOver() {
@@ -166,6 +169,11 @@ public class Game {
 			}
 		}
 		return false;
+	}
+	
+	public void drawShoot(int i, int j, int k, int l) {
+		
+		mc.addLine(i, j, k, l);
 	}
 	
 	public boolean isMonster(Monster monster) {

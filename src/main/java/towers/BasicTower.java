@@ -124,8 +124,8 @@ public class BasicTower {
 		//shoot Monster
 				if(selectedMonster != null) {
 					System.out.println("Basic Tower@(" + getX()/40+"," + getY()/40+")"+ " -> " + selectedMonster.getType() + "@(" + (selectedMonster.getX()-20)/40+"," + (selectedMonster.getY()-20)/40+")");
+					game.drawShoot(getX()+20, getY()+20, selectedMonster.getX(), selectedMonster.getY());
 					game.getMonsterList().get(game.getMonsterList().indexOf(selectedMonster)).setHp(selectedMonster.getHp() - getAttackPower());
-					//System.out.println("heloooooo2");
 					List<Object> attackPair = new ArrayList<Object>();
 					attackPair.add(this);
 					attackPair.add(selectedMonster);
