@@ -100,7 +100,7 @@ public class BasicTower {
 		for(Monster monster: monsterList) {
 			
 			//Check if the monster in range
-			int distance = distance(getX(), getY(), monster.getX(), monster.getY());
+			int distance = distance(getX()+20, getY()+20, monster.getX(), monster.getY());
 			if(distance <= this.getMaxRange() && distance >= this.getMinRange()) {				
 				//Chose which monster to shoot if more than one is in range
 				if(selectedMonster != null) {
@@ -123,6 +123,7 @@ public class BasicTower {
 		Monster selectedMonster = selectMonster(game.getMonsterList(), game);
 		//shoot Monster
 				if(selectedMonster != null) {
+					System.out.println("Basic Tower@(" + getX()/40+"," + getY()/40+")"+ " -> " + selectedMonster.getType() + "@(" + (selectedMonster.getX()-20)/40+"," + (selectedMonster.getY()-20)/40+")");
 					game.getMonsterList().get(game.getMonsterList().indexOf(selectedMonster)).setHp(selectedMonster.getHp() - getAttackPower());
 					//System.out.println("heloooooo2");
 					List<Object> attackPair = new ArrayList<Object>();

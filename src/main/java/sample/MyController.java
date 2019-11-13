@@ -18,7 +18,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Arc;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,8 +50,8 @@ public class MyController {
 	private Label catapultImg;
 	@FXML
 	private Label laserTowerImg;
-	//private static final int ARENA_WIDTH = 480;
-	//private static final int ARENA_HEIGHT = 480;
+	private static final int ARENA_WIDTH = 480;
+	private static final int ARENA_HEIGHT = 480;
 	private static final int GRID_WIDTH = 40;
 	private static final int GRID_HEIGHT = 40;
 	private static final int MAX_H_NUM_GRID = 12;
@@ -59,7 +60,8 @@ public class MyController {
 	private Label grids[][] = new Label[MAX_V_NUM_GRID][MAX_H_NUM_GRID]; // the grids on arena
 	private List<Label> monsterLabelList = new ArrayList<Label>();
 	private Game game;
-	
+	private Button but1 = null;
+	private Button but2 = null;
 	
 	public static int getGridWidth() {
 		return GRID_WIDTH;
@@ -136,15 +138,15 @@ public class MyController {
 								infos.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 								infos.setStyle("-fx-border-color: black;");
 								
-								if (target.getLayoutX()== 400) {
-									infos.setLayoutX(target.getLayoutX()-80);
+								if (target.getLayoutX()>= 400) {
+									infos.setLayoutX(target.getLayoutX()-50);
 								} else {
 									infos.setLayoutX(target.getLayoutX()+30);	
 								}
 								
 								if (target.getLayoutY()==0) {
 									infos.setLayoutY(target.getLayoutY()+30);
-								} else if (target.getLayoutY()== 440){
+								} else if (target.getLayoutY()>= 400){
 									infos.setLayoutY(target.getLayoutY()-10);
 								} else {
 									infos.setLayoutY(target.getLayoutY()-10);	
@@ -213,7 +215,11 @@ public class MyController {
 			System.out.println(tower.getType()+ " tower is being upgraded");
 		}else {
 			System.out.println("not enough resource to upgrade " + tower.getType() +" tower");
-			//dialogbox
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Information Dialog");
+			alert.setHeaderText(null);
+			alert.setContentText("Not enough money!");
+			alert.showAndWait();
 		}
 	}
 	
@@ -224,6 +230,14 @@ public class MyController {
         source.setGraphic(null);
 	}
 	
+	public void addButtons(Button b1, Button b2) {
+		but1 = b1;
+		but2 = b2;
+	}
+	
+	public void removeButtons() {
+		paneArena.getChildren().removeAll(but1, but2);
+	}
 	/**
 	 * A function that create the Arena
 	 */
@@ -256,8 +270,18 @@ public class MyController {
 				newLabel.setMinHeight(getGridHeight()); newLabel.setMaxHeight(getGridHeight());
 				newLabel.setStyle("-fx-border-color: black;");
 				grids[i][j] = newLabel;
+				newLabel.setOnMouseClicked(new EventHandler<MouseEvent>(){
+		            @Override
+		            public void handle(MouseEvent event) {
+		            	paneArena.getChildren().removeAll(but1, but2);
+		            }
+		        });
 				paneArena.getChildren().addAll(newLabel);
 			}
+		image = new Image(getClass().getResourceAsStream("/start.png"), 40, 40, false, false);
+		grids[0][0].setGraphic(new ImageView(image));
+		image = new Image(getClass().getResourceAsStream("/end.png"), 40, 40, false, false);
+		grids[0][MAX_V_NUM_GRID-1].setGraphic(new ImageView(image));
 		setDragAndDrop();
 	}
 
@@ -439,10 +463,16 @@ class ClickEventHandler implements EventHandler<MouseEvent> {
 		circle.setMouseTransparent(true);
 		buttonUpgrade = new Button("Upgrade");
 		buttonDestroy = new Button("Destroy ");
-		buttonUpgrade.setLayoutX(source.getLayoutX()+50);
+		if (source.getLayoutX()<400) {
+			buttonUpgrade.setLayoutX(source.getLayoutX()+50);
+			buttonDestroy.setLayoutX(source.getLayoutX()+50);
+				
+		}else {
+			buttonUpgrade.setLayoutX(source.getLayoutX()-50);
+			buttonDestroy.setLayoutX(source.getLayoutX()-50);
+		}
 		buttonUpgrade.setLayoutY(source.getLayoutY()-10);
-		buttonDestroy.setLayoutX(source.getLayoutX()+50);
-		buttonDestroy.setLayoutY(source.getLayoutY()+30);
+		buttonDestroy.setLayoutY(source.getLayoutY()+20);
 		EventHandler<ActionEvent> eventUpgrade = new EventHandler<ActionEvent>() { 
             public void handle(ActionEvent e) 
             { 
@@ -468,7 +498,9 @@ class ClickEventHandler implements EventHandler<MouseEvent> {
 			return;
 		}
     	if (!paneArena.getChildren().contains(buttonUpgrade)) {
+			mc.removeButtons();
 			paneArena.getChildren().addAll(buttonUpgrade, buttonDestroy);
+			mc.addButtons(buttonUpgrade, buttonDestroy);
 		}else {
 			paneArena.getChildren().removeAll(buttonUpgrade, buttonDestroy);
 		}
@@ -541,7 +573,11 @@ class DragDroppedEventHandler implements EventHandler<DragEvent> {
 				((Label) event.getGestureTarget()).setGraphic(new ImageView(image));
 				success = true;
 			}else {
-				//dialog box
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Information Dialog");
+				alert.setHeaderText(null);
+				alert.setContentText("Not enough money!");
+				alert.showAndWait();
 			}
 		}
 		event.setDropCompleted(success);

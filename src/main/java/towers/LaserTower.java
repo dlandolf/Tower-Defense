@@ -46,6 +46,7 @@ public class LaserTower extends BasicTower{
 					if(game.getResources() >= attackCost) {
 						for(Monster monster: game.getMonsterList()) {
 							if(checkIfOnBeam(selectedMonster, monster)) {
+								System.out.println("LaserTower@(" + getX()/40+"," + getY()/40+")"+ " -> " + selectedMonster.getType() + "@(" + (selectedMonster.getX()-20)/40+"," + (selectedMonster.getY()-20)/40+")");
 								game.getMonsterList().get(game.getMonsterList().indexOf(monster)).setHp(selectedMonster.getHp() - getAttackPower());
 								List<Object> attackPair = new ArrayList<Object>();
 								attackPair.add(this);

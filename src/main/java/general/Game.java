@@ -83,6 +83,7 @@ public class Game {
 
 	
 	public boolean nextframe () {
+		System.out.println("-------------------------");
 		frameId++;
 
 		getDeadMonsterList().clear();
@@ -94,9 +95,7 @@ public class Game {
 		for (Monster deadmonster : getDeadMonsterList()) {
 				getMonsterList().remove(getMonsterList().indexOf(deadmonster));
 		}
-		
 		if (!gameOver) {
-			
 			Monster newMonster = addNewMonster();
 			if (newMonster != null) {
 				getMonsterList().add(newMonster);
