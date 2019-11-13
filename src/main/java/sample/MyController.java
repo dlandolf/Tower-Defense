@@ -195,7 +195,7 @@ public class MyController {
 	
 	public void updateLineList() {
 		for (Line line : lineList) {
-			System.out.println("eeeeee");
+			//System.out.println("eeeeee");
 			paneArena.getChildren().addAll(line);
 		}
 	}
