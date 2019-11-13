@@ -1,5 +1,8 @@
 package monsters;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import general.Game;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -13,6 +16,8 @@ public class Monster {
 	private int slowForFrames;
 	private int x;
 	private int y;
+	private List<Integer> x_prior;
+	private List<Integer> y_prior;
 	private boolean alive;
 	private boolean isNew;
 	private String img;
@@ -24,6 +29,10 @@ public class Monster {
 		this.game = game;
 		this.setX(x);
 		this.setY(y);
+		this.x_prior = new ArrayList<Integer>();
+		this.y_prior = new ArrayList<Integer>();
+		x_prior.add(x);
+		y_prior.add(y);
 		this.setAlive(true);
 		setIsNew(true);
 	}
@@ -71,6 +80,26 @@ public class Monster {
 
 	public void setY(int y) {
 		this.y = y;
+	}
+	
+	public List<Integer> getXPrior() {
+		return x_prior;
+	}
+
+
+
+	public void setXPrior(List<Integer> x_prior) {
+		this.x_prior = x_prior;
+	}
+	
+	public List<Integer> getYPrior() {
+		return y_prior;
+	}
+
+
+
+	public void setYPrior(List<Integer> y_prior) {
+		this.y_prior = y_prior;
 	}
 
 
@@ -151,6 +180,8 @@ public class Monster {
 
 	public void move() {
 		setIsNew(false);
+		x_prior.clear();
+		y_prior.clear();
 	
 		if (alive) {
 			if (slowForFrames > 0) {
@@ -196,6 +227,9 @@ public class Monster {
 				break;
 			}*/
 			
+			x_prior.add(x);
+			y_prior.add(y);
+			
 			//if field at grid position gridIdxX+1 is white, move there!
 			if ((gridIdxX+1) % 2 == 0 || (gridIdxY) == ((gridIdxX + 2) / 2 % 2) * 11) {
 				x = x + gridWidth;
@@ -207,6 +241,7 @@ public class Monster {
 			else {
 				y = y - gridHeight; //move up!
 			}
+			
 
 		}
 	}
