@@ -89,6 +89,8 @@ public class MyController {
 			game.nextframe();
 			updateMonsterLabels();
 			updateLineList();
+			nbAsStr = String.valueOf(game.getResources());
+			labelMoney.setText(nbAsStr);
 			if (game.getGameOver()) {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Gameover");
@@ -188,12 +190,10 @@ public class MyController {
 	
 	public void addLine(int i, int j, int k, int l) {
 		lineList.add(new Line(i, j, k, l));
-		System.out.println(i +" " + j +" " + k + "  " + l);
 	}
 	
 	public void updateLineList() {
 		for (Line line : lineList) {
-			System.out.println("eeeeee");
 			paneArena.getChildren().addAll(line);
 		}
 	}
