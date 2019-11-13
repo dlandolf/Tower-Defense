@@ -105,8 +105,18 @@ public class BasicTower {
 				//Chose which monster to shoot if more than one is in range
 				if(selectedMonster != null) {
 					//Decide which monster is closer to endzone, chose endzone as in demo (440,0)
-					if(distance(monster.getX(),monster.getY(),game.getEndzonex(),game.getEndzoney()) < distance(selectedMonster.getX(),selectedMonster.getY(),game.getEndzonex(),game.getEndzoney())) {
+					if(monster.getX() > selectedMonster.getX()) {
 						selectedMonster = monster;
+					}
+					
+					if(monster.getX() == selectedMonster.getX()) {
+						int column = (int) monster.getX()/40;
+						if(monster.getY() > selectedMonster.getY() && column%4 == 0) {
+							selectedMonster = monster;
+						}
+						if(monster.getY() < selectedMonster.getY() && column%4 != 0) {
+							selectedMonster = monster;
+						}
 					}
 				}
 				else {
