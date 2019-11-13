@@ -89,6 +89,8 @@ public class MyController {
 			game.nextframe();
 			updateMonsterLabels();
 			updateLineList();
+			nbAsStr = String.valueOf(game.getResources());
+			labelMoney.setText(nbAsStr);
 			if (game.getGameOver()) {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Gameover");
