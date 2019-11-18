@@ -3,43 +3,36 @@ import monsters.*;
 import general.*;
 import sample.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Assert;
+import static org.junit.Assert;
 import org.junit.Test;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.input.*;
-import javafx.event.*;
-import javafx.fxml.FXML;
+import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.paint.*;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Arc;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.application.Application;
 import javafx.stage.Stage;
+
+import java.util.*;
 
 public class test_cases{
 	
-	
 //	@Test
-//	public void testShoot() {
+//	public void testAll() {
+//		Main main = new Main();
+//		Stage primaryStage = new Stage();
+//		
+//		try {
+//			main.start(primaryStage);
+//			}
+//			catch(Exception e) {
+//				//print("Error");
+//			}
+//	}
+	
+
+	
+	@Test
+	public void testShoot() {
 //		FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample.fxml"));
 //        Parent root = loader.load();
 //        primaryStage.setTitle("Tower Defence");
@@ -49,24 +42,28 @@ public class test_cases{
 //        appController.createArena();
 //		
 //		game.nextframe();
-//		
-//		BasicTower testTower = new BasicTower(40,40);
-//		Monster testMonster = game.addNewMonster();
-//		
-//		List<Monster> monsterList = new ArrayList<Monster>();
-//		monsterList.add(testMonster);
-//		
-//		game.setMonsterList(monsterList);
-//		game.buildTower(testTower);
-//		
-//		testTower.shoot(game);
-//		
-//		List<Object> attackPair = new ArrayList<Object>();
-//		attackPair.add(testTower);
-//		attackPair.add(testMonster);
-//		
-//		Assert.assertEquals(game.getAttackList().get(0), attackPair);
-//	}
+		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample.fxml"));
+		MyController appController = (MyController)loader.getController();
+		Game game = new Game(100, appController);
+		
+		BasicTower testTower = new BasicTower(40,40);
+		Monster testMonster = game.addNewMonster();
+		
+		List<Monster> monsterList = new ArrayList<Monster>();
+		monsterList.add(testMonster);
+		
+		game.setMonsterList(monsterList);
+		game.buildTower(testTower);
+		
+		testTower.shoot(game);
+		
+		List<Object> attackPair = new ArrayList<Object>();
+		attackPair.add(testTower);
+		attackPair.add(testMonster);
+		
+		Assert.assertEquals(game.getAttackList().get(0), attackPair);
+	}
 //	
 //	@Test
 //	public void testIceTowerShoot() {
@@ -127,5 +124,6 @@ public class test_cases{
 //	
 //	
 	
-
+	
 }
+
