@@ -172,6 +172,12 @@ public class test_cases extends ApplicationTest{
 			
 		mc.getGame().buildTower(testTower1);
 		mc.getGame().buildTower(testTower2);
+		mc.getGame().printTowers();
+		mc.getGame().getTower(40,160);
+		
+		Assert.assertEquals(mc.getGame().getTower(40,160), testTower2);
+		boolean istower = mc.getGame().isTower(testTower1);
+		Assert.assertEquals(istower, true);
 		
 		clickOn("#buttonNextFrame");	//Penguin monster should be created
 		Assert.assertEquals(mc.getGame().getMonsterList().get(0).getAlive(), true);
@@ -263,6 +269,28 @@ public class test_cases extends ApplicationTest{
 		clickOn("#buttonNextFrame");
 		
 		Assert.assertEquals(mc.getGame().getGameOver(), true);
+		
+	}
+	
+	@Test
+	public void addDifferentMonsters() {
+		clickOn("#buttonNextFrame"); //penguin generated with hp 5
+		
+		clickOn("#buttonNextFrame");
+		
+		clickOn("#buttonNextFrame"); //Fox generated
+		
+		clickOn("#buttonNextFrame");
+		
+		clickOn("#buttonNextFrame"); //unicorn generated
+		
+		Assert.assertEquals(mc.getGame().getMonsterList().get(0).getType(), "Penguin");
+		
+		Assert.assertEquals(mc.getGame().getMonsterList().get(1).getType(), "Fox");
+		
+		Assert.assertEquals(mc.getGame().getMonsterList().get(2).getType(), "Unicorn");
+		
+		Assert.assertEquals(mc.getGame().getMonsterList().size(), 3);
 		
 	}
 	
