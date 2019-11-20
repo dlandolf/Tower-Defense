@@ -128,6 +128,10 @@ public class test_cases extends ApplicationTest{
 		
 		Assert.assertEquals(mc.getGame().getAttackList().get(0), attackPairFox);
 		
+		testTower.shoot(mc.getGame());
+		Assert.assertEquals(mc.getGame().getMonsterList().get(1).getHp(), 4);
+		
+		
 	}
 	
 	@Test
