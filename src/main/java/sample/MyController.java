@@ -261,6 +261,10 @@ public class MyController {
 	public void removeButtons() {
 		paneArena.getChildren().removeAll(but1, but2);
 	}
+	
+	public Game getGame() {
+		return game;
+	}
 	/**
 	 * A function that create the Arena
 	 */

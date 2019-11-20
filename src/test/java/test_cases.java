@@ -3,67 +3,78 @@ import monsters.*;
 import general.*;
 import sample.*;
 
-import static org.junit.Assert;
+import org.junit.Assert;
 import org.junit.Test;
+import org.testfx.framework.junit.ApplicationTest;
 
-import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 
 import java.util.*;
 
-public class test_cases{
+public class test_cases extends ApplicationTest{
 	
-//	@Test
-//	public void testAll() {
-//		Main main = new Main();
-//		Stage primaryStage = new Stage();
-//		
-//		try {
-//			main.start(primaryStage);
-//			}
-//			catch(Exception e) {
-//				//print("Error");
-//			}
-//	}
+	private Scene s;
+	private MyController mc;
 	
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample.fxml"));
+        Parent root = loader.load();
+        primaryStage.setTitle("Tower Defence");
+        s = new Scene(root, 600, 480);
+        primaryStage.setScene(s);
+        primaryStage.show();
+        mc = (MyController)loader.getController();
+        mc.createArena();   		
+	}
 
 	
 	@Test
 	public void testShoot() {
-//		FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample.fxml"));
-//        Parent root = loader.load();
-//        primaryStage.setTitle("Tower Defence");
-//        primaryStage.setScene(new Scene(root, 600, 480));
-//        primaryStage.show();
-//        MyController appController = (MyController)loader.getController();
-//        appController.createArena();
-//		
-//		game.nextframe();
 		
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample.fxml"));
-		MyController appController = (MyController)loader.getController();
-		Game game = new Game(100, appController);
+		//clickOn("#buttonNextFrame");
 		
 		BasicTower testTower = new BasicTower(40,40);
-		Monster testMonster = game.addNewMonster();
+		Monster testMonster = new PenguinMonster(20, 20, mc.getGame());
 		
 		List<Monster> monsterList = new ArrayList<Monster>();
 		monsterList.add(testMonster);
 		
-		game.setMonsterList(monsterList);
-		game.buildTower(testTower);
+		mc.getGame().setMonsterList(monsterList);
+		mc.getGame().buildTower(testTower);
 		
-		testTower.shoot(game);
+		testTower.shoot(mc.getGame());
 		
 		List<Object> attackPair = new ArrayList<Object>();
 		attackPair.add(testTower);
 		attackPair.add(testMonster);
 		
-		Assert.assertEquals(game.getAttackList().get(0), attackPair);
+		Assert.assertEquals(mc.getGame().getAttackList().get(0), attackPair);
 	}
+	
+	
+//	@Test
+//	public void testNextFrameButton() {
+//		clickOn("#buttonNextFrame");
+//		AnchorPane b = (AnchorPane)s.lookup("#paneArena");
+//		for (javafx.scene.Node i : b.getChildren()) {
+//			if (i.getClass().getName().equals("javafx.scene.control.Label")) {
+//				Label h = (Label)i;
+//				if (h.getLayoutX() == 0 && h.getLayoutY() == 0) {
+//					Image image = new Image(getClass().getResourceAsStream("/penguin.png"), 20, 20, false, false);
+//					ImageView graphic = new ImageView(image);
+//					Assert.assertEquals(h.getGraphic(), graphic);
+//				}
+//			}
+//		}
+//	}
 //	
 //	@Test
 //	public void testIceTowerShoot() {
