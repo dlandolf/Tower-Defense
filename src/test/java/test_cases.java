@@ -131,7 +131,108 @@ public class test_cases extends ApplicationTest{
 		
 	}
 	
+	@Test
+	public void testDeadMonster() {
+		
+		BasicTower testTower1 = new BasicTower(40, 0);
+		BasicTower testTower2 = new BasicTower(40,160);
+		testTower2.setAttackPower(5);
+			
+		mc.getGame().buildTower(testTower1);
+		mc.getGame().buildTower(testTower2);
+		
+		clickOn("#buttonNextFrame");	//Penguin monster should be created
+		Assert.assertEquals(mc.getGame().getMonsterList().get(0).getAlive(), true);
+		Assert.assertEquals(mc.getGame().getMonsterList().get(0).getHp(), 4);
+		
+		clickOn("#buttonNextFrame");	//Penguin monster moves and regains HP
+		Assert.assertEquals(mc.getGame().getMonsterList().get(0).getHp(), 5);
+		
+		clickOn("#buttonNextFrame"); //Penguin should move and be shot by a tower and die
+		Assert.assertEquals(mc.getGame().getMonsterList().get(0).getAlive(), false);
+		
+		//label should be replaced by collision
+		AnchorPane b = (AnchorPane)s.lookup("#paneArena");
+		for (javafx.scene.Node i : b.getChildren()) {
+			if (i.getClass().getName().equals("javafx.scene.control.Label")) {
+				Label h = (Label)i;
+				if (h.getLayoutX() == 20 && h.getLayoutY() == 180) {
+					Image image = new Image(getClass().getResourceAsStream("/collision.png"), 20, 20, false, false);
+					ImageView graphic = new ImageView(image);
+					Assert.assertEquals(h.getGraphic(), graphic);
+				}
+			}
+		}
+		
+		clickOn("#buttonNextFrame");
+		//added penguinmonster to deadmonsterlist
+		Assert.assertEquals(mc.getGame().getDeadMonsterList().get(0).getType(), "Penguin");
+		
+	}
 	
+	@Test
+	public void testMovingMonsters() {
+		
+		Monster testMonsterPenguin = new PenguinMonster(20, 460, mc.getGame());
+		Monster testMonsterFox = new FoxMonster(100, 60, mc.getGame());
+		Monster testMonsterUnicorn = new UnicornMonster(340, 100, mc.getGame());
+		
+		List<Monster> monsterList = new ArrayList<Monster>();
+		monsterList.add(testMonsterPenguin);
+		monsterList.add(testMonsterFox);
+		monsterList.add(testMonsterUnicorn);
+		mc.getGame().setMonsterList(monsterList);
+		
+		testMonsterPenguin.move();
+		testMonsterFox.move();
+		testMonsterUnicorn.move();
+		Assert.assertEquals(mc.getGame().getMonsterList().get(0).getX(), 100);
+		Assert.assertEquals(mc.getGame().getMonsterList().get(0).getY(), 460);
+		
+		Assert.assertEquals(mc.getGame().getMonsterList().get(1).getX(), 180);
+		Assert.assertEquals(mc.getGame().getMonsterList().get(1).getY(), 60);
+		
+		Assert.assertEquals(mc.getGame().getMonsterList().get(2).getX(), 340);
+		Assert.assertEquals(mc.getGame().getMonsterList().get(2).getY(), 180);
+		
+	}
+	
+	@Test
+	public void testGameOver() {
+		
+		Monster testMonsterFox = new FoxMonster(420, 60, mc.getGame());
+		
+		List<Monster> monsterList = new ArrayList<Monster>();
+		monsterList.add(testMonsterFox);
+		mc.getGame().setMonsterList(monsterList);
+		
+		//clickOn("#buttonNextFrame"); //game should be over
+		testMonsterFox.move();
+		
+		Assert.assertEquals(mc.getGame().getGameOver(), true);
+		
+		testMonsterFox.move();
+		
+		Assert.assertEquals(mc.getGame().getGameOver(), true);
+		
+		//clickOn("#buttonNextFrame"); //nothing should happen
+		
+		//Assert.assertEquals(mc.getGame().getGameOver(), true);
+		
+	}
+	
+	@Test
+	public void testsetGameOver() {
+		clickOn("#buttonNextFrame");
+		Assert.assertEquals(mc.getGame().getGameOver(), false);
+		
+		mc.getGame().setGameOver(true);
+		
+		clickOn("#buttonNextFrame");
+		
+		Assert.assertEquals(mc.getGame().getGameOver(), true);
+		
+	}
 	
 	
 }
