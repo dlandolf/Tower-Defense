@@ -164,7 +164,6 @@ public class test_cases extends ApplicationTest{
 		Assert.assertEquals(testMonsterPenguin.getHp(), 5);
 		Assert.assertEquals(testMonsterFox.getHp(), 4);
 		Assert.assertEquals(testMonsterUnicorn.getHp(), 9);
-		
 	}
 	
 	@Test
@@ -273,7 +272,6 @@ public class test_cases extends ApplicationTest{
 		clickOn("#buttonNextFrame");
 		
 		Assert.assertEquals(mc.getGame().getGameOver(), true);
-		
 	}
 	
 	@Test
@@ -295,6 +293,20 @@ public class test_cases extends ApplicationTest{
 		Assert.assertEquals(mc.getGame().getMonsterList().get(2).getType(), "Unicorn");
 		
 		Assert.assertEquals(mc.getGame().getMonsterList().size(), 3);
+		
+	}
+	
+	@Test
+	public void addTowerTest() {
+		
+		BasicTower testTower1 = new BasicTower(40, 0);
+		BasicTower testTower2 = new BasicTower(40,160);
+		Label lab = mc.labelBasicTower;
+		
+//		mc.addTower(testTower1, lab);
+//		mc.addTower(testTower2, lab);
+//		
+//		Assert.assertEquals(mc.getGame().getMonsterList().size(), 3);
 		
 	}
 	
