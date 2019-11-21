@@ -295,11 +295,8 @@ public class test_cases extends ApplicationTest{
 	}
 	
 	@Test
-	public void DragandDropTowerTest() {
+	public void DragandDropTowerTest_onTower() {
 		
-		drag("#labelBasicTower");
-		dropBy(-500,-100);
-		Assert.assertEquals(mc.getGame().getTower(40, 0).getType(), "Basic");
 
 		drag("#labelBasicTower");
 		dropBy(-500,-60);
@@ -308,16 +305,26 @@ public class test_cases extends ApplicationTest{
 		drag("#labelBasicTower");
 		//should'nt place it because already other tower there
 		dropBy(-500,-60);
-		Assert.assertEquals(mc.getGame().getTowerList().size(), 2);
-		
-		drag("#labelBasicTower");
-		//should'nt place it because white field
-		dropBy(-440,-60);
-		Assert.assertEquals(mc.getGame().getTowerList().size(), 2);
+		Assert.assertEquals(mc.getGame().getTowerList().size(), 1);
 		
 		drag("#labelIceTower");
 		dropBy(-500,-80);
 		Assert.assertEquals(mc.getGame().getTower(40, 80).getType(), "Ice");
+		
+		
+	}
+	
+	@Test
+	public void DragandDropTowerTest_onWhite() {
+		
+		drag("#labelBasicTower");
+		dropBy(-500,-100);
+		Assert.assertEquals(mc.getGame().getTower(40, 0).getType(), "Basic");
+		
+		drag("#labelBasicTower");
+		//should'nt place it because white field
+		dropBy(-440,-60);
+		Assert.assertEquals(mc.getGame().getTowerList().size(), 1);
 		
 	}
 	
