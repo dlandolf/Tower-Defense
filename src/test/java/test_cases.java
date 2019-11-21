@@ -316,8 +316,8 @@ public class test_cases extends ApplicationTest{
 		Assert.assertEquals(mc.getGame().getTowerList().size(), 2);
 		
 		drag("#labelIceTower");
-		dropBy(-500,-60);
-		Assert.assertEquals(mc.getGame().getTower(40, 120).getType(), "Ice");
+		dropBy(-500,-80);
+		Assert.assertEquals(mc.getGame().getTower(40, 80).getType(), "Ice");
 		
 	}
 	
