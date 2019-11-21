@@ -173,7 +173,6 @@ public class test_cases extends ApplicationTest{
 		Assert.assertEquals(testMonsterPenguin.getHp(), 5);
 		Assert.assertEquals(testMonsterFox.getHp(), 4);
 		Assert.assertEquals(testMonsterUnicorn.getHp(), 9);
-		
 	}
 	
 	@Test
@@ -277,7 +276,6 @@ public class test_cases extends ApplicationTest{
 		monsterList.add(testMonsterFox);
 		mc.getGame().setMonsterList(monsterList);
 		
-		//clickOn("#buttonNextFrame"); //game should be over
 		testMonsterFox.move();
 		
 		Assert.assertEquals(mc.getGame().getGameOver(), true);
@@ -285,10 +283,6 @@ public class test_cases extends ApplicationTest{
 		testMonsterFox.move();
 		
 		Assert.assertEquals(mc.getGame().getGameOver(), true);
-		
-		//clickOn("#buttonNextFrame"); //nothing should happen
-		
-		//Assert.assertEquals(mc.getGame().getGameOver(), true);
 		
 	}
 	
@@ -305,7 +299,6 @@ public class test_cases extends ApplicationTest{
 		clickOn("#buttonNextFrame");
 		
 		Assert.assertEquals(mc.getGame().getGameOver(), true);
-		
 	}
 	
 	@Test
@@ -332,6 +325,25 @@ public class test_cases extends ApplicationTest{
 		Assert.assertEquals(mc.getGame().getMonsterList().size(), 3);
 		
 	}
+	
+//	@Test
+//	public void addTowerTest() {
+//		
+//		//handle
+//		
+//		BasicTower testTower1 = new BasicTower(40, 0);
+//		//BasicTower testTower2 = new BasicTower(40,160);
+//		//Label lab = mc.getBasicTowerImg();
+//		
+//		
+//		
+//		//mc.addTower(testTower1, lab);
+//		//mc.addTower(testTower2, lab);
+//		
+//		Assert.assertEquals(mc.getGame().isTower(testTower1), true);
+//		//Assert.assertEquals(mc.getGame().isTower(testTower2), true);
+//		
+//	}
 	
 	
 }

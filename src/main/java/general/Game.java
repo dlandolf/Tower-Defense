@@ -85,7 +85,7 @@ public class Game {
 	}
 
 	
-	public boolean nextframe () {
+	public void nextframe () {
 		System.out.println("-------------------------");
 		frameId++;
 
@@ -114,7 +114,6 @@ public class Game {
 			monster.updateAlive();
 		}
 		
-		return false;
 	}
 	
 	public Monster addNewMonster() {
