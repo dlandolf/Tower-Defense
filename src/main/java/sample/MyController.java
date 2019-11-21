@@ -64,6 +64,10 @@ public class MyController {
 	private Button but1 = null;
 	private Button but2 = null;
 	
+	public Label getBasicTowerImg() {
+		return basicTowerImg;
+	}
+	
 	public static int getGridWidth() {
 		return GRID_WIDTH;
 	}
