@@ -1,7 +1,16 @@
 # COMP3111 Project - Tower Defense
-Created by: Dr. Kevin Wang (kevinw@cse.ust.hk)
+
+## Team members of TDCTeam
+Dominic Landolf	|	djlandolf	|	Monsters
+Corentin Sename	|	clsename		|	Arena
+Tim Engelmann	|	twengelmann	|	Towers
+
+
+
 
 ## Project Problem Statement and Activities
+Created by: Dr. Kevin Wang (kevinw@cse.ust.hk)
+
  
  ### [Project Sign Up](https://docs.google.com/spreadsheets/d/1fGQYkAsdawLWlxSNlFxJr192ZFOIowbVIUD1EoVWuYc/edit#gid=0)
  
