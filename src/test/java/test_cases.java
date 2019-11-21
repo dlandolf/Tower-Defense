@@ -76,6 +76,7 @@ public class test_cases extends ApplicationTest{
 	
 	@Test
 	public void testIceTowerShoot() {
+		
 		IceTower testTower = new IceTower(40,40);
 		Monster testMonster = new PenguinMonster(20, 20, mc.getGame());
 		
@@ -259,6 +260,7 @@ public class test_cases extends ApplicationTest{
 	
 	@Test
 	public void testsetGameOver() {
+		
 		clickOn("#buttonNextFrame");
 		Assert.assertEquals(mc.getGame().getGameOver(), false);
 		
@@ -271,6 +273,7 @@ public class test_cases extends ApplicationTest{
 	
 	@Test
 	public void addDifferentMonsters() {
+		
 		clickOn("#buttonNextFrame"); //penguin generated with hp 5
 		
 		clickOn("#buttonNextFrame");
@@ -318,6 +321,27 @@ public class test_cases extends ApplicationTest{
 		
 	}
 	
+	@Test
+	public void moving_Fox_through_range() {
+		
+		drag("#labelBasicTower");
+		dropBy(-500,-20);
+		Assert.assertEquals(mc.getGame().getTower(40, 80).getType(), "Basic");
+		
+		clickOn("#buttonNextFrame"); //penguin generated with hp 5
+		clickOn("#buttonNextFrame");
+		
+		clickOn("#buttonNextFrame"); //Fox generated
+		Assert.assertEquals(mc.getGame().getMonsterList().get(1).getHp(), 5); //was not shot yet
+		
+		clickOn("#buttonNextFrame"); //Fox moved through range
+		Assert.assertEquals(mc.getGame().getMonsterList().get(1).getHp(), 4); //was shot
+		
+		Monster selected_Monster = mc.getGame().getTower(40, 80).selectMonster(mc.getGame().getMonsterList(), mc.getGame());
+		Assert.assertEquals(mc.getGame().getMonsterList().get(1), selected_Monster); //show that Fox was selected
+		
+		
+	}
 	
 }
 

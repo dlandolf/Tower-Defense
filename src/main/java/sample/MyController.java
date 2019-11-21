@@ -612,6 +612,7 @@ class DragDroppedEventHandler implements EventHandler<DragEvent> {
 					alert.setContentText("Not enough money!");
 					alert.showAndWait();
 				}
+
 			}
 			
 		}
