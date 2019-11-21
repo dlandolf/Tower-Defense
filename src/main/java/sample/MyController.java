@@ -599,6 +599,7 @@ class DragDroppedEventHandler implements EventHandler<DragEvent> {
 			BasicTower newTower = newInstance(ValidatorType.valueOf(changeToEnum(db.getString())), 
 					((int) (gridX+0.5)*MyController.getGridWidth()), 
 					((int) (gridY+0.5)*MyController.getGridHeight()));	//position needs to be in pixels!
+			
 			if (mc.addTower(newTower, ((Label) event.getGestureTarget()))) {
 				Image image = new Image(getClass().getResourceAsStream(newTower.getImg()), 40, 40, false, false);
 				((Label) event.getGestureTarget()).setGraphic(new ImageView(image));
