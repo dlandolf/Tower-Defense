@@ -24,11 +24,11 @@ public class LaserTower extends BasicTower{
 	
 	boolean checkIfOnBeam(Monster selectedMonster, Monster monster) {
 	
-		int vx = selectedMonster.getX()-getX();
-		int vy = selectedMonster.getY()-getY();
+		int vx = selectedMonster.getX()-(getX()+20);
+		int vy = selectedMonster.getY()-(getY()+20);
 		double a = (monster.getX()-getX())/vx;
 
-		if(a>0 && getY() + a * vy - laserWidth < monster.getY() && monster.getY() < getY() + a * vy + laserWidth) {
+		if(a>0 && (getY()+20) + a * vy - laserWidth < monster.getY() && monster.getY() < (getY()+20) + a * vy + laserWidth) {
 
 			return true;
 		}
@@ -46,16 +46,19 @@ public class LaserTower extends BasicTower{
 					if(game.getResources() >= attackCost) {
 						for(Monster monster: game.getMonsterList()) {
 							if(checkIfOnBeam(selectedMonster, monster)) {
-								System.out.println("LaserTower@(" + getX()/40+"," + getY()/40+")"+ " -> " + selectedMonster.getType() + "@(" + (selectedMonster.getX()-20)/40+"," + (selectedMonster.getY()-20)/40+")");
-								game.drawShoot(getX()+20, getY()+20, selectedMonster.getX(), selectedMonster.getY());
-								game.getMonsterList().get(game.getMonsterList().indexOf(monster)).setHp(selectedMonster.getHp() - getAttackPower());
-								List<Object> attackPair = new ArrayList<Object>();
-								attackPair.add(this);
-								attackPair.add(monster);
-								game.getAttackList().add(attackPair);
+								game.getMonsterList().get(game.getMonsterList().indexOf(monster)).setHp(monster.getHp() - getAttackPower());
 							}
 						}
 					}
+					
+					System.out.println("LaserTower@(" + getX()/40+"," + getY()/40+")"+ " -> " + selectedMonster.getType() + "@(" + (selectedMonster.getX()-20)/40+"," + (selectedMonster.getY()-20)/40+")");
+					game.drawShoot(getX()+20, getY()+20, selectedMonster.getX(), selectedMonster.getY());
+					
+					List<Object> attackPair = new ArrayList<Object>();
+					attackPair.add(this);
+					attackPair.add(selectedMonster);
+					game.getAttackList().add(attackPair);
+					
 					game.setResources(game.getResources() - attackCost);
 			
 				}
