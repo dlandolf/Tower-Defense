@@ -291,24 +291,32 @@ public class test_cases extends ApplicationTest{
 		
 	}
 	
-//	@Test
-//	public void addTowerTest() {
-//		
-//		//handle
-//		
-//		BasicTower testTower1 = new BasicTower(40, 0);
-//		//BasicTower testTower2 = new BasicTower(40,160);
-//		//Label lab = mc.getBasicTowerImg();
-//		
-//		
-//		
-//		//mc.addTower(testTower1, lab);
-//		//mc.addTower(testTower2, lab);
-//		
-//		Assert.assertEquals(mc.getGame().isTower(testTower1), true);
-//		//Assert.assertEquals(mc.getGame().isTower(testTower2), true);
-//		
-//	}
+	@Test
+	public void DragandDropTowerTest() {
+		
+		drag("#labelBasicTower");
+		dropBy(-500,-100);
+		Assert.assertEquals(mc.getGame().getTower(40, 0).getType(), "Basic");
+
+		drag("#labelBasicTower");
+		dropBy(-500,-60);
+		Assert.assertEquals(mc.getGame().getTower(40, 40).getType(), "Basic");
+		
+		drag("#labelBasicTower");
+		//should'nt place it because already other tower there
+		dropBy(-500,-60);
+		Assert.assertEquals(mc.getGame().getTowerList().size(), 2);
+		
+		drag("#labelBasicTower");
+		//should'nt place it because white field
+		dropBy(-440,-60);
+		Assert.assertEquals(mc.getGame().getTowerList().size(), 2);
+		
+		drag("#labelIceTower");
+		dropBy(-500,-60);
+		Assert.assertEquals(mc.getGame().getTower(40, 120).getType(), "Ice");
+		
+	}
 	
 	
 }

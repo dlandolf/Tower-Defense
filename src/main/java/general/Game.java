@@ -59,6 +59,10 @@ public class Game {
 	public List<Monster> getDeadMonsterList() {
 		return deadMonsterList;
 	}
+	
+	public List<BasicTower> getTowerList() {
+		return towerList;
+	}
 
 	public void setDeadMonsterList(List<Monster> deadMonsterList) {
 		this.deadMonsterList = deadMonsterList;
