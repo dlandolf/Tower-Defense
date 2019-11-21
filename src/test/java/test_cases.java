@@ -347,20 +347,19 @@ public class test_cases extends ApplicationTest{
 	public void clickOnTower() {
 		
 		drag("#labelBasicTower");
-		dropTo(460,500);
-		//Assert.assertEquals(mc.getGame().getTower(40, 80).getType(), "Basic");
+		dropBy(-500, -60);
+
+		clickOn();
+		moveBy(+70, 0);
 		
-		
-		clickOn(460,500);
-		
-		clickOn(530,480);
-		
+		clickOn();
 		Assert.assertEquals(mc.getGame().getTowerList().get(0).getLevel(), 2);
 		
-		clickOn(460,500);
-		
-		clickOn(530,520);
-		
+		moveBy(-70, 0);
+		clickOn();
+		moveBy(70, 20);
+		clickOn();
+	
 		Assert.assertEquals(mc.getGame().getTowerList().size(), 0);
 		
 		
