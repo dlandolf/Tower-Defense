@@ -18,8 +18,8 @@ public class CatapultTower extends BasicTower{
 		this.inCoolDownFrames = 0;
 		this.damageRadius = 25;
 		this.setImg("/catapult.png");
-		this.setMaxRange(150);
-		this.setMinRange(50);
+		this.setMaxRange(149);
+		this.setMinRange(51);
 	}
 	@Override
 	public String getType() {
@@ -41,24 +41,24 @@ public class CatapultTower extends BasicTower{
 		if(inCoolDownFrames == 0) {
 			Monster selectedMonster = selectMonster(game.getMonsterList(), game);
 			//shoot Monster
-					if(selectedMonster != null) {
+			if(selectedMonster != null) {
+				
+				for(Monster monster: game.getMonsterList()) {
+					if(checkIfInZone(selectedMonster, monster)) {
+					
+						game.getMonsterList().get(game.getMonsterList().indexOf(monster)).setHp(monster.getHp() - getAttackPower());
 						
-						for(Monster monster: game.getMonsterList()) {
-							if(checkIfInZone(selectedMonster, monster)) {
-							
-								game.getMonsterList().get(game.getMonsterList().indexOf(monster)).setHp(monster.getHp() - getAttackPower());
-								
-							}
-						}
-						System.out.println("Catapult@(" + getX()/40+"," + getY()/40+")"+ " -> " + selectedMonster.getType() + "@(" + (selectedMonster.getX()-20)/40+"," + (selectedMonster.getY()-20)/40+")");
-						game.drawShoot(getX()+20, getY()+20, selectedMonster.getX(), selectedMonster.getY());
-						inCoolDownFrames = coolDownTime;
-						
-						List<Object> attackPair = new ArrayList<Object>();
-						attackPair.add(this);
-						attackPair.add(selectedMonster);
-						game.getAttackList().add(attackPair);
 					}
+				}
+				System.out.println("Catapult@(" + getX()/40+"," + getY()/40+")"+ " -> " + selectedMonster.getType() + "@(" + (selectedMonster.getX()-20)/40+"," + (selectedMonster.getY()-20)/40+")");
+				game.drawShoot(getX()+20, getY()+20, selectedMonster.getX(), selectedMonster.getY());
+				inCoolDownFrames = coolDownTime;
+				
+				List<Object> attackPair = new ArrayList<Object>();
+				attackPair.add(this);
+				attackPair.add(selectedMonster);
+				game.getAttackList().add(attackPair);
+			}
 		}
 		else {
 			inCoolDownFrames--;
@@ -67,7 +67,9 @@ public class CatapultTower extends BasicTower{
 	
 	@Override
 	public void upgradeTower() {
-		coolDownTime = coolDownTime - 1;
+		if(coolDownTime > 0) {
+			coolDownTime = coolDownTime - 1;
+		}
 		this.setLevel(this.getLevel()+1);
 	}
 }

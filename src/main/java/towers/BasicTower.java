@@ -11,8 +11,8 @@ public class BasicTower {
 	private int maxRange;
 	private int minRange;
 	private int attackPower;
-	private int x;
-	private int y;
+	private int x; //towers x is in upper left corner of grid 
+	private int y; //towers y is in upper left corner of grid 
 	private int cost;
 	private String img;
 	private int level;
@@ -151,15 +151,15 @@ public class BasicTower {
 	public void shoot(Game game) {
 		Monster selectedMonster = selectMonster(game.getMonsterList(), game);
 		//shoot Monster
-				if(selectedMonster != null) {
-					System.out.println("Basic Tower@(" + getX()/40+"," + getY()/40+")"+ " -> " + selectedMonster.getType() + "@(" + (selectedMonster.getX()-20)/40+"," + (selectedMonster.getY()-20)/40+")");
-					game.drawShoot(getX()+20, getY()+20, selectedMonster.getX(), selectedMonster.getY());
-					game.getMonsterList().get(game.getMonsterList().indexOf(selectedMonster)).setHp(selectedMonster.getHp() - getAttackPower());
-					List<Object> attackPair = new ArrayList<Object>();
-					attackPair.add(this);
-					attackPair.add(selectedMonster);
-					game.getAttackList().add(attackPair);
-				}
+		if(selectedMonster != null) {
+			System.out.println("Basic Tower@(" + getX()/40+"," + getY()/40+")"+ " -> " + selectedMonster.getType() + "@(" + (selectedMonster.getX()-20)/40+"," + (selectedMonster.getY()-20)/40+")");
+			game.drawShoot(getX()+20, getY()+20, selectedMonster.getX(), selectedMonster.getY());
+			game.getMonsterList().get(game.getMonsterList().indexOf(selectedMonster)).setHp(selectedMonster.getHp() - getAttackPower());
+			List<Object> attackPair = new ArrayList<Object>();
+			attackPair.add(this);
+			attackPair.add(selectedMonster);
+			game.getAttackList().add(attackPair);
+		}
 	}
 	
 	
