@@ -73,6 +73,30 @@ public class test_cases extends ApplicationTest{
 		Assert.assertEquals(mc.getGame().getAttackList().get(0), attackPair);
 	}
 	
+	@Test
+	public void testShoot_samerow() {
+		
+		BasicTower testTower = new BasicTower(40,40);
+		Monster testMonster_high = new PenguinMonster(20, 60, mc.getGame());
+		Monster testMonster_low = new PenguinMonster(20, 100, mc.getGame());
+		
+		List<Monster> monsterList = new ArrayList<Monster>();
+		monsterList.add(testMonster_high);
+		monsterList.add(testMonster_low);
+		
+		mc.getGame().setMonsterList(monsterList);
+		mc.getGame().buildTower(testTower);
+		
+		testTower.shoot(mc.getGame());
+		
+		List<Object> attackPair = new ArrayList<Object>();
+		attackPair.add(testTower);
+		attackPair.add(testMonster_low);
+		
+		Assert.assertEquals(mc.getGame().getAttackList().get(0), attackPair);
+	}
+	
+	
 	
 	@Test
 	public void testIceTowerShoot() {
@@ -97,6 +121,43 @@ public class test_cases extends ApplicationTest{
 		Assert.assertEquals(testMonster.getHp(), 5);
 		Assert.assertEquals(testMonster.getSpeed(), 1);
 		Assert.assertEquals(testMonster.getSlowForFrames(), 5);
+
+	}
+	
+	@Test
+	public void testmultipleIceTowerShoot() {
+		
+		IceTower testTower_weak = new IceTower(40,40);
+		IceTower testTower_strong = new IceTower(40,80);
+		
+		Monster testMonster = new PenguinMonster(20, 60, mc.getGame());
+		
+		List<Monster> monsterList = new ArrayList<Monster>();
+		monsterList.add(testMonster);
+		
+		mc.getGame().setMonsterList(monsterList);
+		mc.getGame().buildTower(testTower_strong);
+		mc.getGame().buildTower(testTower_weak);
+		mc.getGame().getTower(40, 80).upgradeTower();
+		
+		for(BasicTower tower: mc.getGame().getTowerList()) {
+			tower.shoot(mc.getGame());
+		}
+		
+		List<Object> attackPair = new ArrayList<Object>();
+		attackPair.add(testTower_weak);
+		attackPair.add(testMonster);
+		
+		List<Object> attackPair_2 = new ArrayList<Object>();
+		attackPair_2.add(testTower_strong);
+		attackPair_2.add(testMonster);
+		
+		Assert.assertEquals(mc.getGame().getAttackList().get(0), attackPair_2);
+		Assert.assertEquals(mc.getGame().getAttackList().get(1), attackPair);
+		
+		Assert.assertEquals(testMonster.getHp(), 5);
+		Assert.assertEquals(testMonster.getSpeed(), 1);
+		Assert.assertEquals(testMonster.getSlowForFrames(), 7);
 
 	}
 	
@@ -165,6 +226,50 @@ public class test_cases extends ApplicationTest{
 		Assert.assertEquals(testMonsterPenguin.getHp(), 5);
 		Assert.assertEquals(testMonsterFox.getHp(), 4);
 		Assert.assertEquals(testMonsterUnicorn.getHp(), 9);
+	}
+	
+	@Test
+	public void testLaserTowerShootDown() {
+		
+		LaserTower testTower = new LaserTower(40,400);
+		
+		Monster testMonsterPenguin = new PenguinMonster(60, 460, mc.getGame());
+		Monster testMonsterFox = new FoxMonster(60, 460, mc.getGame());
+		
+		List<Monster> monsterList = new ArrayList<Monster>();
+		monsterList.add(testMonsterPenguin);
+		monsterList.add(testMonsterFox);
+		
+		mc.getGame().setMonsterList(monsterList);
+		mc.getGame().buildTower(testTower);
+		
+		testTower.shoot(mc.getGame());
+		
+		Assert.assertEquals(testMonsterPenguin.getHp(), 4);
+		Assert.assertEquals(testMonsterFox.getHp(), 4);
+	
+	}
+	
+	@Test
+	public void testLaserTowerShootDiagonal() {
+		
+		LaserTower testTower = new LaserTower(40,400);
+		
+		Monster testMonsterPenguin = new PenguinMonster(100, 380, mc.getGame());
+		Monster testMonsterFox = new FoxMonster(420, 60, mc.getGame());
+		
+		List<Monster> monsterList = new ArrayList<Monster>();
+		monsterList.add(testMonsterPenguin);
+		monsterList.add(testMonsterFox);
+		
+		mc.getGame().setMonsterList(monsterList);
+		mc.getGame().buildTower(testTower);
+		
+		testTower.shoot(mc.getGame());
+		
+		Assert.assertEquals(testMonsterPenguin.getHp(), 4);
+		Assert.assertEquals(testMonsterFox.getHp(), 4);
+	
 	}
 	
 	@Test
