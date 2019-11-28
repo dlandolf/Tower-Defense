@@ -5,12 +5,21 @@ import monsters.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class for Ice Tower
+ *
+ */
 
 public class IceTower extends BasicTower{
 	
 	private int slowingFactor;
 	private int slowingFrames;
 	
+	/**
+	 * constructor for IceTower
+	 * @param x
+	 * @param y
+	 */
 	public IceTower(int x,int y){
 		super(x,y);
 		this.slowingFactor = 2;
@@ -19,11 +28,19 @@ public class IceTower extends BasicTower{
 		this.setImg("/iceTower.png");
 	}
 	
+	/**
+	 * Getter for type
+	 * @return Ice
+	 */
 	@Override
 	public String getType() {
 		return "Ice";
 	}
 	
+	/**
+	 * Shoot function for ice tower
+	 * @param game
+	 */
 	@Override
 	public void shoot(Game game) {
 		Monster selectedMonster = selectMonster(game.getMonsterList(), game);
@@ -45,6 +62,9 @@ public class IceTower extends BasicTower{
 		}
 	}
 	
+	/**
+	 * Upgrade Tower function
+	 */
 	@Override
 	public void upgradeTower() {
 		slowingFrames = slowingFrames + 2;

@@ -2,8 +2,18 @@ package monsters;
 import javafx.scene.control.Label;
 import general.Game;
 
+/**
+ * Class for Fox Monster
+ *
+ */
 public class FoxMonster extends Monster {
 	
+	/**
+	 * Constructor for Fox Monster
+	 * @param x
+	 * @param y
+	 * @param game
+	 */
 	public FoxMonster(int x, int y, Game game) {
 		super(x,y,game);
 		this.setHp((int) (5 + Math.floor(game.getFrameId()/4)));

@@ -4,7 +4,10 @@ import java.util.*;
 import towers.*;
 import monsters.*;
 import sample.*;
-
+/**
+ * Game class to handle monsters list and towers list
+ * 
+ */
 public class Game {
 	private int resources;
 	private int endzonex;
@@ -18,7 +21,11 @@ public class Game {
 	private List<Object> attackList;
 	private MyController mc;
 	
-	
+	/**
+	 * Constructor for game
+	 * @param resources
+	 * @param mc
+	 */
 	public Game(int resources, MyController mc) {
 		this.frameId=0;
 		this.setResources(resources);
@@ -31,64 +38,123 @@ public class Game {
 		endzoney = 0;
 		this.mc = mc;
 	}
-	
+	/**
+	 * Getter for gameover state
+	 * @return gameOver
+	 */
 	public boolean getGameOver() {
 		return gameOver;
 	}
 	
+	/**
+	 * Set for gameover state
+	 * @param gameOver
+	 */
 	public void setGameOver(boolean gameOver) {
 		this.gameOver = gameOver;
 	}
 	
+	/**
+	 * Getter EndZoneX
+	 * @return endzonex
+	 */
 	public int getEndzonex() {
 		return endzonex;
 	}
 
+	/**
+	 * Getter EndZoneY
+	 * @return endzoney
+	 */
 	public int getEndzoney() {
 		return endzoney;
 	}
 
+	/**
+	 * Getter for monster's list
+	 * @return monsterList
+	 */
 	public List<Monster> getMonsterList() {
 		return monsterList;
 	}
 
+	/**
+	 * Setter MonstersList
+	 * @param monsterList
+	 */
 	public void setMonsterList(List<Monster> monsterList) {
 		this.monsterList = monsterList;
 	}
 	
+	/**
+	 * Getter for dead monsters list
+	 * @return deadMonsterList
+	 */
 	public List<Monster> getDeadMonsterList() {
 		return deadMonsterList;
 	}
 	
+	/**
+	 * Getter for TowerList
+	 * @return towerList
+	 */
 	public List<BasicTower> getTowerList() {
 		return towerList;
 	}
 
+	/**
+	 * Setter for deadMonsterList
+	 * @param deadMonsterList
+	 */
 	public void setDeadMonsterList(List<Monster> deadMonsterList) {
 		this.deadMonsterList = deadMonsterList;
 	}
 
+	/**
+	 * Getter AttackList
+	 * @return attackList
+	 */
 	public List<Object> getAttackList() {
 		return attackList;
 	}
 
+	/**
+	 * Setter for attacklist
+	 * @param attackList
+	 */
 	public void setAttackList(List<Object> attackList) {
 		this.attackList = attackList;
 	}
 
+	/**
+	 * Get resources
+	 * @return resources
+	 */
 	public int getResources() {
 		return resources;
 	}
 
+	/**
+	 * Set resources
+	 * @param resources
+	 */
 	public void setResources(int resources) {
 		this.resources = resources;
 	}
 	
+	/**
+	 * Getter for FrameID
+	 * @return frameId
+	 */
 	public int getFrameId() {
 		return frameId;
 	}
 
-	
+	/**
+	 * Next frame function called each frame
+	 * Moving monster
+	 * Shooting towers
+	 */
 	public void nextframe () {
 		System.out.println("-------------------------");
 		frameId++;
@@ -120,6 +186,10 @@ public class Game {
 		
 	}
 	
+	/**
+	 * Adding a new monster to the grid
+	 * @return addmonster
+	 */
 	public Monster addNewMonster() {
 		//every second frame a monster is created
 		int spawnX = sample.MyController.getGridWidth()/2;
@@ -138,16 +208,31 @@ public class Game {
 		return addmonster;
 	}
 	
+	/**
+	 * Adding a new tower to the list
+	 * @param tower
+	 * @return true
+	 */
 	public boolean buildTower(BasicTower tower) {
 		towerList.add(tower);
 		return true;
 	}
+	
+	/**
+	 * Printing towers to check list
+	 */
 	public void printTowers() {
 		for (BasicTower tower : towerList) {
 			System.out.println("Tower" + tower.getType() + "   x: " + tower.getX() + "  y: " + tower.getY());
 		}
 	}
 	
+	/**
+	 * Getters for tower at a position
+	 * @param i
+	 * @param j
+	 * @return tower
+	 */
 	public BasicTower getTower(int i, int j) {
 		for (BasicTower tower : towerList) {
 			if (tower.getX()==i && tower.getY()==j) {
@@ -156,6 +241,12 @@ public class Game {
 		}
 		return null;
 	}
+	
+	/**
+	 * if tower is in the list
+	 * @param tower
+	 * @return boolean
+	 */
 	public boolean isTower(BasicTower tower) {
 		for (BasicTower towerenum : towerList) {
 			if (towerenum == tower) {
@@ -164,6 +255,13 @@ public class Game {
 		}
 		return false;
 	}
+	
+	/**
+	 * Destroy tower at a position
+	 * @param i
+	 * @param j
+	 * @return boolean if possible
+	 */
 	public boolean destroyTower(int i, int j) {
 		for (BasicTower tower : towerList) {
 			if (tower.getX()==i && tower.getY()==j) {
@@ -174,10 +272,23 @@ public class Game {
 		return false;
 	}
 	
+	/**
+	 * draw shoot (line between monster and tower) at a position i,j -- k,l
+	 * @param i
+	 * @param j
+	 * @param k
+	 * @param l
+	 */
 	public void drawShoot(int i, int j, int k, int l) {
 		
 		mc.addLine(i, j, k, l);
 	}
+	
+	/**
+	 * if it is a Monster
+	 * @param monster
+	 * @return boolean
+	 */
 	
 	public boolean isMonster(Monster monster) {
 		for (Monster monsterenum : monsterList) {

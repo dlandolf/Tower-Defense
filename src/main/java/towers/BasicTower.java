@@ -6,7 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.lang.Math; 
 
-
+/**
+ * Class for basicTower
+ *
+ */
 public class BasicTower {
 	private int maxRange;
 	private int minRange;
@@ -17,6 +20,11 @@ public class BasicTower {
 	private String img;
 	private int level;
 	
+	/**
+	 * Constructor for basic tower
+	 * @param x
+	 * @param y
+	 */
 	public BasicTower(int x, int y){
 		this.maxRange = 65;
 		this.minRange = 0;
@@ -28,72 +36,154 @@ public class BasicTower {
 		this.img = "/basicTower.png";
 	}
 	
+	
+	/**
+	 * Getter for type
+	 * @return type
+	 */
 	public String getType() {
 		return "Basic";
 	}
 	
+	/**
+	 * Getter for img
+	 * @return img
+	 */
 	public String getImg() {
 		return img;
 	}
 	
+	/**
+	 * Setter for image
+	 * @param img
+	 */
 	public void setImg(String img) {
 		this.img = img;
 	}
 	
+	/**
+	 * Getter for X
+	 * @return x
+	 */
 	public int getX() {
 		return x;
 	}
 
+	/**
+	 * Setter for x
+	 * @param x
+	 */
 	public void setX(int x) {
 		this.x = x;
 	}
 
+	/**
+	 * Getter for Y
+	 * @return y
+	 */
 	public int getY() {
 		return y;
 	}
 
+	/**
+	 * Setter for y
+	 * @param y
+	 */
 	public void setY(int y) {
 		this.y = y;
 	}
-
+	
+	/**
+	 * Getter for Attack Power
+	 * @return attackPower
+	 */
 	public int getAttackPower() {
 		return attackPower;
 	}
 	
+	/**
+	 * Setter fro attackPower
+	 * @param attackPower
+	 */
 	public void setAttackPower(int attackPower) {
 		this.attackPower = attackPower;
 	}
 	
+	/**
+	 * Getter for cost
+	 * @return cost
+	 */
 	public int getCost() {
 		return cost;
 	}
 	
+	/**
+	 * Getter for MaxRange
+	 * @return maxRange
+	 */
 	public int getMaxRange() {
 		return maxRange;
 	}
+	
+	/**
+	 * Setter for MaxRange
+	 * @param max
+	 */
 	public void setMaxRange(int max) {
 		this.maxRange = max;
 	}
+	
+	/**
+	 * Getter for minRange
+	 * @return minRange
+	 */
 	public int getMinRange() {
 		return minRange;
 	}
+	
+	/**
+	 * Setter for minrange
+	 * @param min
+	 */
 	public void setMinRange(int min) {
 		this.minRange = min;
 	}
 	
+	/**
+	 * Getter for level
+	 * @return level
+	 */
 	public int getLevel() {
 		return level;
 	}
+	
+	/**
+	 * Setter level
+	 * @param level
+	 */
 	public void setLevel(int level) {
 		this.level= level;
 	}
 
-
+	/**
+	 * Calculate distance between 2 objects
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 * @return distance
+	 */
 	public int distance(int x1, int y1,int x2, int y2) {
 		int distance = (int) Math.abs(Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2,2)));
 		return distance;
 	}
 	
+	/**
+	 * Select monster to shoot
+	 * @param monsterList
+	 * @param game
+	 * @return Monster
+	 */
 	public Monster selectMonster(List<Monster> monsterList, Game game) {
 		
 		List<Monster> inrange_monster = new ArrayList<Monster>();
@@ -148,6 +238,10 @@ public class BasicTower {
 		return selectedMonster;
 	}
 	
+	/**
+	 * Shoot function for basic Tower
+	 * @param game
+	 */
 	public void shoot(Game game) {
 		Monster selectedMonster = selectMonster(game.getMonsterList(), game);
 		//shoot Monster
@@ -162,7 +256,9 @@ public class BasicTower {
 		}
 	}
 	
-	
+	/**
+	 * UpgradeTower function
+	 */
 	public void upgradeTower() {
 		setAttackPower(getAttackPower() + 1);
 		this.level++;
