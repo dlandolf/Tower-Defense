@@ -1,10 +1,19 @@
 package monsters;
 
 import general.Game;
-
+/**
+ * Class for Penguin Monster
+ *
+ */
 public class PenguinMonster extends Monster {
 	private int initialHp;
 	
+	/**
+	 * Constructor for penguin monster
+	 * @param x
+	 * @param y
+	 * @param game
+	 */
 	public PenguinMonster(int x, int y, Game game) {
 		super(x,y,game);
 		initialHp = (int) (5 + Math.floor(game.getFrameId()/4));
@@ -16,6 +25,9 @@ public class PenguinMonster extends Monster {
 		this.updateLabel();
 	}
 	
+	/**
+	 * Function to replenish HP because penguin
+	 */
 	@Override
 	public void replenishHP() {
 		//if (this.getHp() + 2 <= initialHp) {

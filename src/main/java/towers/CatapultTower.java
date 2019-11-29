@@ -6,12 +6,21 @@ import java.util.List;
 
 import general.*;
 
+/**
+ * Class for catapult Tower
+ *
+ */
 public class CatapultTower extends BasicTower{
 
 	private int coolDownTime;
 	private int inCoolDownFrames;
 	private int damageRadius;
 	
+	/**
+	 * Constructor for catapult tower
+	 * @param x
+	 * @param y
+	 */
 	public CatapultTower(int x,int y){
 		super(x,y);
 		this.coolDownTime = 5;
@@ -21,11 +30,22 @@ public class CatapultTower extends BasicTower{
 		this.setMaxRange(149);
 		this.setMinRange(51);
 	}
+	
+	/**
+	 * Getter for Type
+	 * @return Catapult
+	 */
 	@Override
 	public String getType() {
 		return "Catapult";
 	}
 	
+	/**
+	 * Check if monster is in the zone for damage
+	 * @param selectedMonster
+	 * @param monster
+	 * @return
+	 */
 	boolean checkIfInZone(Monster selectedMonster, Monster monster) {
 		
 		if(distance(selectedMonster.getX(),selectedMonster.getY(), monster.getX(), monster.getY()) <= damageRadius) {
@@ -36,6 +56,10 @@ public class CatapultTower extends BasicTower{
 		}
 	}
 	
+	/**
+	 * Shoot function for catapult tower
+	 * @param game
+	 */
 	@Override
 	public void shoot(Game game) {
 		if(inCoolDownFrames == 0) {
@@ -65,6 +89,9 @@ public class CatapultTower extends BasicTower{
 		}
 	}
 	
+	/**
+	 * Upgrade Tower function
+	 */
 	@Override
 	public void upgradeTower() {
 		if(coolDownTime > 0) {

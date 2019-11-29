@@ -4,12 +4,20 @@ import general.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * class for LaserTower
+ *
+ */
 public class LaserTower extends BasicTower{
 
 	private int attackCost;
 	private int laserWidth;
 	
+	/**
+	 * Constructor for tower
+	 * @param x
+	 * @param y
+	 */
 	public LaserTower(int x,int y){
 		super(x,y);
 		this.attackCost = 1;
@@ -17,11 +25,21 @@ public class LaserTower extends BasicTower{
 		this.setImg("/laserTower.png");
 	}
 	
+	/**
+	 * Getter for type
+	 * @return Laser
+	 */
 	@Override
 	public String getType() {
 		return "Laser";
 	}
 	
+	/**
+	 * if monsters are on beam
+	 * @param selectedMonster
+	 * @param monster
+	 * @return boolean
+	 */
 	boolean checkIfOnBeam(Monster selectedMonster, Monster monster) {
 	
 		int vx = selectedMonster.getX()-(getX()+20);
@@ -50,6 +68,11 @@ public class LaserTower extends BasicTower{
 		
 	}
 	
+	/**
+	 * draw laser according to position
+	 * @param selectedMonster
+	 * @param game
+	 */
 	void draw_laserBeam(Monster selectedMonster, Game game) {
 		
 		int vx = selectedMonster.getX()-(getX()+20);
@@ -78,6 +101,11 @@ public class LaserTower extends BasicTower{
 		}
 	}
 	
+	
+	/**
+	 * Function for shoot for laser tower
+	 * @param game
+	 */
 	@Override
 	public void shoot(Game game) {
 		Monster selectedMonster = selectMonster(game.getMonsterList(), game);
