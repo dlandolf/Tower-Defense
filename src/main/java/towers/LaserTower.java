@@ -96,7 +96,10 @@ public class LaserTower extends BasicTower{
 				}
 			}
 			else {
-				game.drawShoot(getX()+20, getY()+20, getX()+20+ (vx/Math.abs(vx))*40*12, getY()+20+ (vy/Math.abs(vy))*40*12);
+				double scaling = 40 * 12 * Math.sqrt(2);
+				double vx_n = scaling * vx/Math.sqrt(Math.pow(vx, 2)+ Math.pow(vy, 2));
+				double vy_n = scaling * vy/Math.sqrt(Math.pow(vx, 2)+ Math.pow(vy, 2));
+				game.drawShoot(getX()+20, getY()+20, (int)(getX()+20+ vx_n), (int)(getY()+20+ vy_n));
 			}
 		}
 	}
