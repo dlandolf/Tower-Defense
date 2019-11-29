@@ -48,7 +48,34 @@ public class LaserTower extends BasicTower{
 			}
 		}
 		
+	}
+	
+	void draw_laserBeam(Monster selectedMonster, Game game) {
 		
+		int vx = selectedMonster.getX()-(getX()+20);
+		
+		if(vx == 0) {
+			if(selectedMonster.getY()>getY()+20) {
+				game.drawShoot(getX()+20, getY()+20, selectedMonster.getX(), 480);
+			}
+			else {
+				game.drawShoot(getX()+20, getY()+20, selectedMonster.getX(), 0);
+			}
+		}
+		else {
+			int vy = selectedMonster.getY()-(getY()+20);
+			if(vy == 0) {
+				if(selectedMonster.getX()>getX()+20) {
+					game.drawShoot(getX()+20, getY()+20, 480, selectedMonster.getY());
+				}
+				else {
+					game.drawShoot(getX()+20, getY()+20, 0, selectedMonster.getY());
+				}
+			}
+			else {
+				game.drawShoot(getX()+20, getY()+20, getX()+20+ (vx/Math.abs(vx))*40*12, getY()+20+ (vy/Math.abs(vy))*40*12);
+			}
+		}
 	}
 	
 	@Override
@@ -64,7 +91,8 @@ public class LaserTower extends BasicTower{
 				}
 				
 				System.out.println("LaserTower@(" + getX()/40+"," + getY()/40+")"+ " -> " + selectedMonster.getType() + "@(" + (selectedMonster.getX()-20)/40+"," + (selectedMonster.getY()-20)/40+")");
-				game.drawShoot(getX()+20, getY()+20, selectedMonster.getX(), selectedMonster.getY());
+				
+				draw_laserBeam(selectedMonster, game);
 				
 				List<Object> attackPair = new ArrayList<Object>();
 				attackPair.add(this);
