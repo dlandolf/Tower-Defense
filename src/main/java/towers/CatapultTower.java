@@ -18,8 +18,8 @@ public class CatapultTower extends BasicTower{
 	
 	/**
 	 * Constructor for catapult tower
-	 * @param x
-	 * @param y
+	 * @param x x_position of upper left corner of grid
+	 * @param y y_position of upper left corner of grid
 	 */
 	public CatapultTower(int x,int y){
 		super(x,y);
@@ -42,9 +42,9 @@ public class CatapultTower extends BasicTower{
 	
 	/**
 	 * Check if monster is in the zone for damage
-	 * @param selectedMonster
-	 * @param monster
-	 * @return
+	 * @param selectedMonster Selected Monster to be shot
+	 * @param monster Monster to be checked if in damage radius
+	 * @return true if monster is in zone
 	 */
 	boolean checkIfInZone(Monster selectedMonster, Monster monster) {
 		
@@ -58,7 +58,7 @@ public class CatapultTower extends BasicTower{
 	
 	/**
 	 * Shoot function for catapult tower
-	 * @param game
+	 * @param game Game where to shoot in
 	 */
 	@Override
 	public void shoot(Game game) {

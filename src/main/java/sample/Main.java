@@ -13,8 +13,8 @@ public class Main extends Application {
 
 	/**
 	 * Start function
-	 * @param primaryStage
-	 * @throws Exception
+	 * @param primaryStage Design of stage
+	 * @throws Exception Throw Exception if resources could not be loaded
 	 */
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -29,7 +29,7 @@ public class Main extends Application {
 
     /**
      * main function that launch
-     * @param args
+     * @param args Args of main
      */
     public static void main(String[] args) {
         launch(args);

@@ -15,8 +15,8 @@ public class LaserTower extends BasicTower{
 	
 	/**
 	 * Constructor for tower
-	 * @param x
-	 * @param y
+	 * @param x x_position of upper left corner of grid
+	 * @param y y_position of upper left corner of grid
 	 */
 	public LaserTower(int x,int y){
 		super(x,y);
@@ -36,9 +36,9 @@ public class LaserTower extends BasicTower{
 	
 	/**
 	 * if monsters are on beam
-	 * @param selectedMonster
-	 * @param monster
-	 * @return boolean
+	 * @param selectedMonster Selected Monster
+	 * @param monster Monster to check
+	 * @return true if monster is on beam
 	 */
 	boolean checkIfOnBeam(Monster selectedMonster, Monster monster) {
 	
@@ -70,8 +70,8 @@ public class LaserTower extends BasicTower{
 	
 	/**
 	 * draw laser according to position
-	 * @param selectedMonster
-	 * @param game
+	 * @param selectedMonster Selected Monster
+	 * @param game Game to draw line in
 	 */
 	void draw_laserBeam(Monster selectedMonster, Game game) {
 		
@@ -107,7 +107,7 @@ public class LaserTower extends BasicTower{
 	
 	/**
 	 * Function for shoot for laser tower
-	 * @param game
+	 * @param game Game where to shoot in
 	 */
 	@Override
 	public void shoot(Game game) {
