@@ -29,9 +29,9 @@ public class Monster {
 	
 	/**
 	 * Constructor for monster
-	 * @param x
-	 * @param y
-	 * @param game
+	 * @param x x_position of center of current grid
+	 * @param y y_position of center of current grid
+	 * @param game Game to be placed in
 	 */
 	public Monster(int x, int y, Game game) {
 		this.game = game;
@@ -76,7 +76,7 @@ public class Monster {
 	
 	/**
 	 * Setter for type
-	 * @param type
+	 * @param type Type of Monster
 	 */
 	public void setType(String type) {
 		this.type = type;
@@ -92,7 +92,7 @@ public class Monster {
 
 	/**
 	 * Setter for x
-	 * @param x
+	 * @param x New x_position
 	 */
 	public void setX(int x) {
 		this.x = x;
@@ -110,7 +110,7 @@ public class Monster {
 
 	/**
 	 * Setter for y
-	 * @param y
+	 * @param y New y_position
 	 */
 	public void setY(int y) {
 		this.y = y;
@@ -126,7 +126,7 @@ public class Monster {
 
 	/**
 	 * Setter XPrior
-	 * @param x_prior
+	 * @param x_prior New list of x_prior 
 	 */
 	public void setXPrior(List<Integer> x_prior) {
 		this.x_prior = x_prior;
@@ -141,8 +141,8 @@ public class Monster {
 	}
 
 	/**
-	 * Setter YPrior
-	 * @param y_prior
+	 * Setter YPrior 
+	 * @param y_prior New list of y_prior 
 	 */
 	public void setYPrior(List<Integer> y_prior) {
 		this.y_prior = y_prior;
@@ -158,7 +158,7 @@ public class Monster {
 	
 	/**
 	 * Setter for HP
-	 * @param hp
+	 * @param hp New HP
 	 */
 	public void setHp(int hp) {
 		this.hp = hp;
@@ -175,7 +175,7 @@ public class Monster {
 
 	/**
 	 * Setter for initialSpeed
-	 * @param initialSpeed
+	 * @param initialSpeed New initialSpeed
 	 */
 	public void setInitialSpeed(int initialSpeed) {
 		this.initialSpeed = initialSpeed;
@@ -191,7 +191,7 @@ public class Monster {
 
 	/**
 	 *  setter for speed
-	 * @param speed
+	 * @param speed New speed
 	 */
 	public void setSpeed(int speed) {
 		this.speed = speed;
@@ -207,7 +207,7 @@ public class Monster {
 
 	/**
 	 * Setter for slowforframes
-	 * @param slowForFrames
+	 * @param slowForFrames updated slowForFrames
 	 */
 	public void setSlowForFrames(int slowForFrames) {
 		this.slowForFrames = slowForFrames;
@@ -224,7 +224,7 @@ public class Monster {
 
 	/**
 	 * Setter for image
-	 * @param img
+	 * @param img New img_string
 	 */
 	public void setImg(String img) {
 		this.img = img;
@@ -232,7 +232,7 @@ public class Monster {
 	
 	/**
 	 * Getter for Alive
-	 * @return boolean
+	 * @return alive
 	 */
 	public boolean getAlive() {
 		return alive;
@@ -240,7 +240,7 @@ public class Monster {
 	
 	/**
 	 * Setter for alive
-	 * @param alive
+	 * @param alive New state of alive
 	 */
 	public void setAlive(Boolean alive) {
 		this.alive = alive;
@@ -257,7 +257,7 @@ public class Monster {
 
 	/**
 	 * Setter for isNew
-	 * @param isNew
+	 * @param isNew New state of isNew
 	 */
 	public void setIsNew(boolean isNew) {
 		this.isNew = isNew;
@@ -295,7 +295,7 @@ public class Monster {
 	
 	/**
 	 * Move towards endzone for the quickest way
-	 * @param speed
+	 * @param speed Speed in which monster moves
 	 */
 	public void moveTowardsEndzone(int speed) {
 		int gridWidth = sample.MyController.getGridWidth();

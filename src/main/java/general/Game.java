@@ -23,8 +23,8 @@ public class Game {
 	
 	/**
 	 * Constructor for game
-	 * @param resources
-	 * @param mc
+	 * @param resources Initial Resources
+	 * @param mc MyController reference
 	 */
 	public Game(int resources, MyController mc) {
 		this.frameId=0;
@@ -48,7 +48,7 @@ public class Game {
 	
 	/**
 	 * Set for gameover state
-	 * @param gameOver
+	 * @param gameOver Set gameOver
 	 */
 	public void setGameOver(boolean gameOver) {
 		this.gameOver = gameOver;
@@ -80,7 +80,7 @@ public class Game {
 
 	/**
 	 * Setter MonstersList
-	 * @param monsterList
+	 * @param monsterList Set to this monsterList
 	 */
 	public void setMonsterList(List<Monster> monsterList) {
 		this.monsterList = monsterList;
@@ -104,7 +104,7 @@ public class Game {
 
 	/**
 	 * Setter for deadMonsterList
-	 * @param deadMonsterList
+	 * @param deadMonsterList set to this deadMonsterList
 	 */
 	public void setDeadMonsterList(List<Monster> deadMonsterList) {
 		this.deadMonsterList = deadMonsterList;
@@ -120,7 +120,7 @@ public class Game {
 
 	/**
 	 * Setter for attacklist
-	 * @param attackList
+	 * @param attackList set to this attackList
 	 */
 	public void setAttackList(List<Object> attackList) {
 		this.attackList = attackList;
@@ -136,7 +136,7 @@ public class Game {
 
 	/**
 	 * Set resources
-	 * @param resources
+	 * @param resources Set to new Resources
 	 */
 	public void setResources(int resources) {
 		this.resources = resources;
@@ -188,7 +188,7 @@ public class Game {
 	
 	/**
 	 * Adding a new monster to the grid
-	 * @return addmonster
+	 * @return monster if one was added, otherwise null
 	 */
 	public Monster addNewMonster() {
 		//every second frame a monster is created
@@ -210,8 +210,8 @@ public class Game {
 	
 	/**
 	 * Adding a new tower to the list
-	 * @param tower
-	 * @return true
+	 * @param tower Tower to built
+	 * @return true if tower could be built
 	 */
 	public boolean buildTower(BasicTower tower) {
 		towerList.add(tower);
@@ -229,9 +229,9 @@ public class Game {
 	
 	/**
 	 * Getters for tower at a position
-	 * @param i
-	 * @param j
-	 * @return tower
+	 * @param i x_position of tower
+	 * @param j y_position of tower
+	 * @return tower if it was found
 	 */
 	public BasicTower getTower(int i, int j) {
 		for (BasicTower tower : towerList) {
@@ -244,8 +244,8 @@ public class Game {
 	
 	/**
 	 * if tower is in the list
-	 * @param tower
-	 * @return boolean
+	 * @param tower Tower to check if in list
+	 * @return true if it was found
 	 */
 	public boolean isTower(BasicTower tower) {
 		for (BasicTower towerenum : towerList) {
@@ -258,9 +258,9 @@ public class Game {
 	
 	/**
 	 * Destroy tower at a position
-	 * @param i
-	 * @param j
-	 * @return boolean if possible
+	 * @param i x_position of tower
+	 * @param j y_position of tower
+	 * @return true if it was possible
 	 */
 	public boolean destroyTower(int i, int j) {
 		for (BasicTower tower : towerList) {
@@ -274,10 +274,10 @@ public class Game {
 	
 	/**
 	 * draw shoot (line between monster and tower) at a position i,j -- k,l
-	 * @param i
-	 * @param j
-	 * @param k
-	 * @param l
+	 * @param i x_position of first object
+	 * @param j y_position of first object
+	 * @param k x_position of second object
+	 * @param l y_position of second object
 	 */
 	public void drawShoot(int i, int j, int k, int l) {
 		
@@ -286,8 +286,8 @@ public class Game {
 	
 	/**
 	 * if it is a Monster
-	 * @param monster
-	 * @return boolean
+	 * @param monster Check for this Monster
+	 * @return true if it was found
 	 */
 	
 	public boolean isMonster(Monster monster) {

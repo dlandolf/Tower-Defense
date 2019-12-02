@@ -71,7 +71,7 @@ public class MyController {
 	
 	/**
 	 * Getter for basicTowerImg
-	 * @return basicTowerIlg
+	 * @return basicTowerImg
 	 */
 	public Label getBasicTowerImg() {
 		return basicTowerImg;
@@ -103,14 +103,14 @@ public class MyController {
 
 	/**
 	 * Setter for monsterLabel List
-	 * @param monsterLabelList
+	 * @param monsterLabelList New monsterLabelList
 	 */
 	public void setMonsterLabelList(List<Label> monsterLabelList) {
 		this.monsterLabelList = monsterLabelList;
 	}
 
 	/**
-	 * Next Frame function to refrsh images and call the frame actions of the game
+	 * Next Frame function to refresh images and call the frame actions of the game
 	 */
 	@FXML
 	private void nextFrame() {
@@ -134,7 +134,7 @@ public class MyController {
 	}
 	
 	/**
-	 * Update monster label aka images
+	 * Update monster label and images
 	 */
 	public void updateMonsterLabels() {
 		
@@ -219,7 +219,7 @@ public class MyController {
 	
 	/**
 	 * Update money in the window and in the game
-	 * @param money
+	 * @param money New amount of Resources
 	 */
 	public void updateMoney(int money) {
 		game.setResources(game.getResources()+money);
@@ -229,10 +229,10 @@ public class MyController {
 	
 	/**
 	 * Add a new line in the window
-	 * @param i
-	 * @param j
-	 * @param k
-	 * @param l
+	 * @param i x_position of start of line
+	 * @param j y_position of start of line
+	 * @param k x_position of end of line
+	 * @param l y_position of end of line
 	 */
 	public void addLine(int i, int j, int k, int l) {
 		lineList.add(new Line(i, j, k, l));
@@ -259,9 +259,9 @@ public class MyController {
 	
 	/**
 	 * Add a tower to the game after drag and drop
-	 * @param tower
-	 * @param lab
-	 * @return true
+	 * @param tower Tower to be added
+	 * @param lab Label to add the tower
+	 * @return true if tower was added
 	 */
 	public boolean addTower(BasicTower tower, Label lab) {
 		if (game.getResources()<100) return false;
@@ -290,7 +290,7 @@ public class MyController {
 	
 	/**
 	 * Upgrade the chosen tower
-	 * @param tower
+	 * @param tower Tower to be upgraded
 	 */
 	public void upgradeTower(BasicTower tower) {
 		if (game.getResources()>=100) {
@@ -309,8 +309,8 @@ public class MyController {
 	
 	/**
 	 * Destroy the chosen tower
-	 * @param tower
-	 * @param source
+	 * @param tower Tower to be destroyed
+	 * @param source Label where tower is in
 	 */
 	public void destroyTower(BasicTower tower, Label source) {
 		int level = tower.getLevel();
@@ -321,8 +321,8 @@ public class MyController {
 	
 	/**
 	 * Add buttons to the tower (destroy and upgrade)
-	 * @param b1
-	 * @param b2
+	 * @param b1 Button one to be added
+	 * @param b2 Button two to be added
 	 */
 	public void addButtons(Button b1, Button b2) {
 		but1 = b1;
@@ -453,13 +453,13 @@ class MouseEnteredEventHandler implements EventHandler<MouseEvent>{
 	
 	/**
 	 * Constructor
-	 * @param e
-	 * @param pane
-	 * @param tower
-	 * @param game
-	 * @param circle
-	 * @param circle2
-	 * @param infos
+	 * @param e Label to add to
+	 * @param pane paneArena
+	 * @param tower Tower which is placed on
+	 * @param game Game where it is placed
+	 * @param circle Shows Maximum Range 
+	 * @param circle2 Shows Minimum Range
+	 * @param infos Info of Tower
 	 */
 	public MouseEnteredEventHandler(Label e, AnchorPane pane, BasicTower tower, Game game, Circle circle, Circle circle2, Label infos) {
 		this.source = e;
@@ -473,7 +473,7 @@ class MouseEnteredEventHandler implements EventHandler<MouseEvent>{
 	
 	/**
 	 * Handler for mouse enter event on the tower
-	 * @param event
+	 * @param event Event that occurred
 	 */
 	@Override 
 	public void handle(MouseEvent event) {
@@ -503,13 +503,13 @@ class MouseExitedEventHandler implements EventHandler<MouseEvent>{
 	
 	/**
 	 * Constructor
-	 * @param e
-	 * @param pane
-	 * @param tower
-	 * @param game
-	 * @param circle
-	 * @param circle2
-	 * @param infos
+	 * @param e Label to add to
+	 * @param pane paneArena
+	 * @param tower Tower which is placed on
+	 * @param game Game where it is placed
+	 * @param circle Shows Maximum Range 
+	 * @param circle2 Shows Minimum Range
+	 * @param infos Info of Tower
 	 */
 	public MouseExitedEventHandler(Label e, AnchorPane pane, BasicTower tower, Game game, Circle circle, Circle circle2, Label infos) {
 		this.source = e;
@@ -523,7 +523,7 @@ class MouseExitedEventHandler implements EventHandler<MouseEvent>{
 	
 	/**
 	 * Handler for mouse exit event on the tower
-	 * @param event
+	 * @param event Event that occurred
 	 */
 	@Override 
 	public void handle(MouseEvent event) {
@@ -547,10 +547,10 @@ class MouseEnteredMonsterEventHandler implements EventHandler<MouseEvent>{
 	
 	/**
 	 * Constructor
-	 * @param source
-	 * @param monsterInField
-	 * @param pane
-	 * @param infos
+	 * @param source Label to add to
+	 * @param monsterInField Boolean if monster is in grid
+	 * @param pane AnchorPane
+	 * @param infos Monster Info
 	 */
 	public MouseEnteredMonsterEventHandler(Label source, boolean monsterInField, AnchorPane pane, Label infos) {
 		this.source = source;
@@ -561,7 +561,7 @@ class MouseEnteredMonsterEventHandler implements EventHandler<MouseEvent>{
 	
 	/**
 	 * Handler for mouse enter event on the monster
-	 * @param event
+	 * @param event Event that occurred
 	 */
 	@Override 
 	public void handle(MouseEvent event) {
@@ -585,10 +585,10 @@ class MouseExitedMonsterEventHandler implements EventHandler<MouseEvent>{
 	
 	/**
 	 * Constructor
-	 * @param source
-	 * @param monsterInField
-	 * @param pane
-	 * @param infos
+	 * @param source Label to add to
+	 * @param monsterInField Boolean if monster is in field
+	 * @param pane AnchorPane
+	 * @param infos Monster Info
 	 */
 	public MouseExitedMonsterEventHandler(Label source, boolean monsterInField, AnchorPane pane, Label infos) {
 		this.source = source;
@@ -599,7 +599,7 @@ class MouseExitedMonsterEventHandler implements EventHandler<MouseEvent>{
 	
 	/**
 	 * Handler for mouse exit event on the monster
-	 * @param event
+	 * @param event Event that occurred
 	 */
 	@Override 
 	public void handle(MouseEvent event) {
@@ -627,11 +627,11 @@ class ClickEventHandler implements EventHandler<MouseEvent> {
 	
 	/**
 	 * Constructor
-	 * @param e
-	 * @param pane
-	 * @param tower
-	 * @param game
-	 * @param mc
+	 * @param e Label to add to
+	 * @param pane AnchorPane
+	 * @param tower Tower that is placed in grid
+	 * @param game Game where it is placed
+	 * @param mc MyController
 	 */
 	public ClickEventHandler(Label e, AnchorPane pane, BasicTower tower, Game game, MyController mc) {
 		this.source = e;
@@ -673,7 +673,7 @@ class ClickEventHandler implements EventHandler<MouseEvent> {
 	
 	/**
 	 * Handler for click on a tower (add buttons)
-	 * @param event
+	 * @param event Event that occurred
 	 */
 	@Override
 	public void handle(MouseEvent event) {
@@ -699,7 +699,7 @@ class DragEventHandler implements EventHandler<MouseEvent> {
 	private Label source;
 	/**
 	 * Constructor
-	 * @param e
+	 * @param e Label to set
 	 */
 	public DragEventHandler(Label e) {
 		source = e;
@@ -707,7 +707,7 @@ class DragEventHandler implements EventHandler<MouseEvent> {
 
 	/**
 	 * Handler for dragging tower
-	 * @param event
+	 * @param event Event that occurred
 	 */
 	@Override
 	public void handle(MouseEvent event) {
@@ -727,7 +727,7 @@ class DragDroppedEventHandler implements EventHandler<DragEvent> {
 	private MyController mc;
 	/**
 	 * Constructor
-	 * @param mc
+	 * @param mc MyController
 	 */
 	public DragDroppedEventHandler(MyController mc){
 		this.mc = mc;
@@ -750,9 +750,9 @@ class DragDroppedEventHandler implements EventHandler<DragEvent> {
 	
 	/**
 	 * New  instance of a tower
-	 * @param validatorType
-	 * @param x
-	 * @param y
+	 * @param validatorType Factory for creating Tower
+	 * @param x x_position
+	 * @param y y_position
 	 * @return tower
 	 */
 	public BasicTower newInstance(ValidatorType validatorType, int x, int y) {
@@ -760,9 +760,9 @@ class DragDroppedEventHandler implements EventHandler<DragEvent> {
 	}
 	
 	/**
-	 * Change string to the good string for the enum
-	 * @param str
-	 * @return string
+	 * Change string to the upper case string for the enum
+	 * @param str String partly lower case
+	 * @return string UPPER case
 	 */
 	public String changeToEnum(String str) {
 		String newstr = "";
@@ -776,7 +776,7 @@ class DragDroppedEventHandler implements EventHandler<DragEvent> {
 	
 	/**
 	 * Handler for towers dropped on a green grid (adding a new tower)
-	 * @param event
+	 * @param event Event that occurred
 	 */
 	@Override
 	public void handle(DragEvent event) {

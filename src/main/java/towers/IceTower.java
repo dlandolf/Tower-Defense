@@ -17,8 +17,8 @@ public class IceTower extends BasicTower{
 	
 	/**
 	 * constructor for IceTower
-	 * @param x
-	 * @param y
+	 * @param x x_position of upper left corner of grid
+	 * @param y y_position of upper left corner of grid
 	 */
 	public IceTower(int x,int y){
 		super(x,y);
@@ -39,7 +39,7 @@ public class IceTower extends BasicTower{
 	
 	/**
 	 * Shoot function for ice tower
-	 * @param game
+	 * @param game Game where to shoot in
 	 */
 	@Override
 	public void shoot(Game game) {

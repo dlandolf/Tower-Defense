@@ -10,9 +10,9 @@ public class FoxMonster extends Monster {
 	
 	/**
 	 * Constructor for Fox Monster
-	 * @param x
-	 * @param y
-	 * @param game
+	 * @param x x_position of center of current grid
+	 * @param y y_position of center of current grid
+	 * @param game Game to be placed in
 	 */
 	public FoxMonster(int x, int y, Game game) {
 		super(x,y,game);

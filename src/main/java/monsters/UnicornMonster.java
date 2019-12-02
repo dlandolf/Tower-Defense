@@ -8,9 +8,9 @@ public class UnicornMonster extends Monster {
 	
 	/**
 	 * Constructor for unicorn monster
-	 * @param x
-	 * @param y
-	 * @param game
+	 * @param x x_position of center of current grid
+	 * @param y y_position of center of current grid
+	 * @param game Game to be placed in
 	 */
 	public UnicornMonster(int x, int y, Game game) {
 		super(x,y,game);

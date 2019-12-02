@@ -22,8 +22,8 @@ public class BasicTower {
 	
 	/**
 	 * Constructor for basic tower
-	 * @param x
-	 * @param y
+	 * @param x x_position of upper left corner of grid
+	 * @param y y_position of upper left corner of grid
 	 */
 	public BasicTower(int x, int y){
 		this.maxRange = 65;
@@ -55,7 +55,7 @@ public class BasicTower {
 	
 	/**
 	 * Setter for image
-	 * @param img
+	 * @param img New img_string to set to
 	 */
 	public void setImg(String img) {
 		this.img = img;
@@ -71,7 +71,7 @@ public class BasicTower {
 
 	/**
 	 * Setter for x
-	 * @param x
+	 * @param x New x_position to set to
 	 */
 	public void setX(int x) {
 		this.x = x;
@@ -87,7 +87,7 @@ public class BasicTower {
 
 	/**
 	 * Setter for y
-	 * @param y
+	 * @param y New y_position to set to
 	 */
 	public void setY(int y) {
 		this.y = y;
@@ -102,8 +102,8 @@ public class BasicTower {
 	}
 	
 	/**
-	 * Setter fro attackPower
-	 * @param attackPower
+	 * Setter for attackPower
+	 * @param attackPower New attackPower
 	 */
 	public void setAttackPower(int attackPower) {
 		this.attackPower = attackPower;
@@ -127,7 +127,7 @@ public class BasicTower {
 	
 	/**
 	 * Setter for MaxRange
-	 * @param max
+	 * @param max New maxRange
 	 */
 	public void setMaxRange(int max) {
 		this.maxRange = max;
@@ -143,7 +143,7 @@ public class BasicTower {
 	
 	/**
 	 * Setter for minrange
-	 * @param min
+	 * @param min New minRange
 	 */
 	public void setMinRange(int min) {
 		this.minRange = min;
@@ -159,7 +159,7 @@ public class BasicTower {
 	
 	/**
 	 * Setter level
-	 * @param level
+	 * @param level New level
 	 */
 	public void setLevel(int level) {
 		this.level= level;
@@ -167,11 +167,11 @@ public class BasicTower {
 
 	/**
 	 * Calculate distance between 2 objects
-	 * @param x1
-	 * @param y1
-	 * @param x2
-	 * @param y2
-	 * @return distance
+	 * @param x1 x_position of first object
+	 * @param y1 y_position of first object
+	 * @param x2 x_position of second object
+	 * @param y2 y_position of second object
+	 * @return euclidean distance
 	 */
 	public int distance(int x1, int y1,int x2, int y2) {
 		int distance = (int) Math.abs(Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2,2)));
@@ -180,9 +180,9 @@ public class BasicTower {
 	
 	/**
 	 * Select monster to shoot
-	 * @param monsterList
-	 * @param game
-	 * @return Monster
+	 * @param monsterList Select a monster from this list
+	 * @param game Game where the tower is in
+	 * @return Selected Monster
 	 */
 	public Monster selectMonster(List<Monster> monsterList, Game game) {
 		
@@ -240,7 +240,7 @@ public class BasicTower {
 	
 	/**
 	 * Shoot function for basic Tower
-	 * @param game
+	 * @param game Game where to shoot in
 	 */
 	public void shoot(Game game) {
 		Monster selectedMonster = selectMonster(game.getMonsterList(), game);
