@@ -1,7 +1,5 @@
-# Team members of TDCTeam
+# Introduction
 
-__Monsters:__ Dominic Landolf (djlandolf)
 
-__Arena:__ Corentin Sename (clsename)
-
-__Towers:__ Tim Engelmann (twengelmann)
+# Video Example
+![alt text](https://github.com/dlandolf/TowerDefense/examples/towerDefence.mp4?raw=true)
